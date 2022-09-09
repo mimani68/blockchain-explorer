@@ -1,0 +1,2759 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Server side Crypto Indexer",
+        "title": "Crypto Indexer",
+        "termsOfService": "http://app.io/api",
+        "contact": {
+            "name": "API Support",
+            "url": "http://app.io/support",
+            "email": "support@app.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "app.io:3000",
+    "basePath": "/api",
+    "paths": {
+        "/apps": {
+            "get": {
+                "description": "Retrive list of active applications order by date",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "application"
+                ],
+                "summary": "Get all applications",
+                "operationId": "get-all-applications",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "ACTIVE",
+                            "PENDING"
+                        ],
+                        "type": "string",
+                        "description": "Status",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllApplicationsResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Empty list",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllApplicationsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllApplicationsResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized application.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllApplicationsResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllApplicationsResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new application",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "application"
+                ],
+                "summary": "Create new application",
+                "operationId": "create-new-application",
+                "parameters": [
+                    {
+                        "description": "Create new application payload",
+                        "name": "Application",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewApplicationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewApplicationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewApplicationResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized application.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewApplicationResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewApplicationResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/apps/{applicationId}": {
+            "get": {
+                "description": "Retrive application object by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "application"
+                ],
+                "summary": "Get signle application by id",
+                "operationId": "get-application-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Application ID/UUID",
+                        "name": "applicationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleApplicationResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Empty responce",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleApplicationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleApplicationResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized application.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleApplicationResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleApplicationResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Soft delete application",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "application"
+                ],
+                "summary": "Soft delete application",
+                "operationId": "soft-delete-application",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Application ID/UUID",
+                        "name": "applicationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveApplicationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveApplicationResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized application.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveApplicationResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveApplicationResponse"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update application",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "application"
+                ],
+                "summary": "Update application",
+                "operationId": "update-application",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Application ID/UUID",
+                        "name": "applicationId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update application payload",
+                        "name": "Application",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateApplicationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateApplicationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateApplicationResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized application.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateApplicationResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateApplicationResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/apps/{applicationId}/permanent": {
+            "delete": {
+                "description": "Delete application",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "application"
+                ],
+                "summary": "Delete application",
+                "operationId": "delete-application",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Application ID/UUID",
+                        "name": "applicationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveApplicationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveApplicationResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized application.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveApplicationResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveApplicationResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets": {
+            "get": {
+                "description": "Retrive list of active assets order by date",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "asset"
+                ],
+                "summary": "Get all assets",
+                "operationId": "get-all-assets",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "ACTIVE",
+                            "PENDING"
+                        ],
+                        "type": "string",
+                        "description": "Status",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllAssetsResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Empty list",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllAssetsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllAssetsResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized asset.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllAssetsResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllAssetsResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new asset",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "asset"
+                ],
+                "summary": "Create new asset",
+                "operationId": "create-new-asset",
+                "parameters": [
+                    {
+                        "description": "Create new asset payload",
+                        "name": "Asset",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewAssetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewAssetResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewAssetResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized asset.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewAssetResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewAssetResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/{assetId}": {
+            "get": {
+                "description": "Retrive asset object by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "asset"
+                ],
+                "summary": "Get signle asset by id",
+                "operationId": "get-asset-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Asset ID/UUID",
+                        "name": "assetId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleAssetResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Empty responce",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleAssetResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleAssetResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized asset.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleAssetResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleAssetResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Soft delete asset",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "asset"
+                ],
+                "summary": "Soft delete asset",
+                "operationId": "soft-delete-asset",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Asset ID/UUID",
+                        "name": "assetId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAssetResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAssetResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized asset.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAssetResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAssetResponse"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update asset",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "asset"
+                ],
+                "summary": "Update asset",
+                "operationId": "update-asset",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Asset ID/UUID",
+                        "name": "assetId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update asset payload",
+                        "name": "Asset",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateAssetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateAssetResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateAssetResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized asset.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateAssetResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateAssetResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/{assetId}/permanent": {
+            "delete": {
+                "description": "Delete asset",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "asset"
+                ],
+                "summary": "Delete asset",
+                "operationId": "delete-asset",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Asset ID/UUID",
+                        "name": "assetId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAssetResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAssetResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized asset.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAssetResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAssetResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/attributes": {
+            "get": {
+                "description": "Retrive list of active attributes order by date",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "attribute"
+                ],
+                "summary": "Get all attributes",
+                "operationId": "get-all-attributes",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "ACTIVE",
+                            "PENDING"
+                        ],
+                        "type": "string",
+                        "description": "Status",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllAttributesResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Empty list",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllAttributesResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllAttributesResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized attribute.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllAttributesResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllAttributesResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new attribute",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "attribute"
+                ],
+                "summary": "Create new attribute",
+                "operationId": "create-new-attribute",
+                "parameters": [
+                    {
+                        "description": "Create new attribute payload",
+                        "name": "Attribute",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewAttributeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewAttributeResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewAttributeResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized attribute.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewAttributeResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewAttributeResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/attributes/{attributeId}": {
+            "get": {
+                "description": "Retrive attribute object by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "attribute"
+                ],
+                "summary": "Get signle attribute by id",
+                "operationId": "get-attribute-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Attribute ID/UUID",
+                        "name": "attributeId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleAttributeResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Empty responce",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleAttributeResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleAttributeResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized attribute.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleAttributeResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleAttributeResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Soft delete attribute",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "attribute"
+                ],
+                "summary": "Soft delete attribute",
+                "operationId": "soft-delete-attribute",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Attribute ID/UUID",
+                        "name": "attributeId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAttributeResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAttributeResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized attribute.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAttributeResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAttributeResponse"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update attribute",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "attribute"
+                ],
+                "summary": "Update attribute",
+                "operationId": "update-attribute",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Attribute ID/UUID",
+                        "name": "attributeId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update attribute payload",
+                        "name": "Attribute",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateAttributeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateAttributeResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateAttributeResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized attribute.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateAttributeResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateAttributeResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/attributes/{attributeId}/permanent": {
+            "delete": {
+                "description": "Delete attribute",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "attribute"
+                ],
+                "summary": "Delete attribute",
+                "operationId": "delete-attribute",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Attribute ID/UUID",
+                        "name": "attributeId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAttributeResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAttributeResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized attribute.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAttributeResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveAttributeResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "Retrive list of active users order by date",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get all users",
+                "operationId": "get-all-users",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "ACTIVE",
+                            "PENDING"
+                        ],
+                        "type": "string",
+                        "description": "Status",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllUsersResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Empty list",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllUsersResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllUsersResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized user.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllUsersResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllUsersResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Create new user",
+                "operationId": "create-new-user",
+                "parameters": [
+                    {
+                        "description": "Create new user payload",
+                        "name": "User",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewUserResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized user.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewUserResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{userId}": {
+            "get": {
+                "description": "Retrive user object by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get signle user by id",
+                "operationId": "get-user-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID/UUID",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleUserResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Empty responce",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleUserResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized user.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleUserResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleUserResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Soft delete user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Soft delete user",
+                "operationId": "soft-delete-user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID/UUID",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveUserResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized user.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveUserResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveUserResponse"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update user",
+                "operationId": "update-user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID/UUID",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update user payload",
+                        "name": "User",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateUserResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized user.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateUserResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{userId}/permanent": {
+            "delete": {
+                "description": "Delete user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Delete user",
+                "operationId": "delete-user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID/UUID",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveUserResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized user.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveUserResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{userId}/status": {
+            "post": {
+                "description": "Update user status",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update user status",
+                "operationId": "change-user-status",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID/UUID",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update user payload",
+                        "name": "User",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateUserResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized user.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateUserResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/wallets": {
+            "get": {
+                "description": "Retrive list of active wallets order by date",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Get all wallets",
+                "operationId": "get-all-wallets",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "ACTIVE",
+                            "PENDING"
+                        ],
+                        "type": "string",
+                        "description": "Status",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllWalletsResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Empty list",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllWalletsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllWalletsResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized wallet.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllWalletsResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllWalletsResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Create new wallet",
+                "operationId": "create-new-wallet",
+                "parameters": [
+                    {
+                        "description": "Create new wallet payload",
+                        "name": "Wallet",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewWalletRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewWalletResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewWalletResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized wallet.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewWalletResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateNewWalletResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/wallets/{walletId}": {
+            "get": {
+                "description": "Retrive wallet object by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Get signle wallet by id",
+                "operationId": "get-wallet-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet ID/UUID",
+                        "name": "walletId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleWalletResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Empty responce",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleWalletResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleWalletResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized wallet.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleWalletResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetSingleWalletResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Soft delete wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Soft delete wallet",
+                "operationId": "soft-delete-wallet",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet ID/UUID",
+                        "name": "walletId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveWalletResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveWalletResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized wallet.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveWalletResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveWalletResponse"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Update wallet",
+                "operationId": "update-wallet",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet ID/UUID",
+                        "name": "walletId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update wallet payload",
+                        "name": "Wallet",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized wallet.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/wallets/{walletId}/charge": {
+            "post": {
+                "description": "Charge wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Charge wallet",
+                "operationId": "charge-wallet",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet ID/UUID",
+                        "name": "walletId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update wallet payload",
+                        "name": "Wallet",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized wallet.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/wallets/{walletId}/deduct": {
+            "post": {
+                "description": "Deduct wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Deduct wallet",
+                "operationId": "deduct-wallet",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet ID/UUID",
+                        "name": "walletId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update wallet payload",
+                        "name": "Wallet",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized wallet.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/wallets/{walletId}/exchange": {
+            "post": {
+                "description": "Exchange wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Exchange wallet",
+                "operationId": "exchange-wallet",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet ID/UUID",
+                        "name": "walletId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update wallet payload",
+                        "name": "Wallet",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok    response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized wallet.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateWalletResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/wallets/{walletId}/permanent": {
+            "delete": {
+                "description": "Delete wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Delete wallet",
+                "operationId": "delete-wallet",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet ID/UUID",
+                        "name": "walletId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ok response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveWalletResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Something bad happened",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveWalletResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized wallet.",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveWalletResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "You hasn't access level for this resource",
+                        "schema": {
+                            "$ref": "#/definitions/dto.RemoveWalletResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.CreateNewApplicationRequest": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "description": "Title\nrequired: true\nexample: Book store",
+                    "type": "string",
+                    "example": "book store"
+                }
+            }
+        },
+        "dto.CreateNewApplicationResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.CreateNewAssetRequest": {
+            "type": "object",
+            "properties": {
+                "attribute": {
+                    "description": "attribute\nrequired: true\nexample: {\"length\": 360}",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "[\"21254\"]"
+                    ]
+                },
+                "eid": {
+                    "description": "External Id\nrequired: false\nexample: myapp-local-s4x9cS1S01M1D",
+                    "type": "string",
+                    "example": "myapp-local-s4x9cS1S01M1D"
+                },
+                "owner": {
+                    "description": "owner\nrequired: true\nexample: ali",
+                    "type": "string",
+                    "example": "ali"
+                },
+                "title": {
+                    "description": "title\nrequired: true\nexample: Gem",
+                    "type": "string",
+                    "example": "Gem"
+                }
+            }
+        },
+        "dto.CreateNewAssetResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.CreateNewAttributeRequest": {
+            "type": "object",
+            "properties": {
+                "eid": {
+                    "description": "External Id\nrequired: false\nexample: myapp-local-i8U8k7y0d9G1",
+                    "type": "string",
+                    "example": "myapp-local-i8U8k7y0d9G1"
+                },
+                "meta": {
+                    "description": "value\nrequired: true\nexample: {\"length\": 360}",
+                    "type": "string",
+                    "example": "{\"length\": 360}"
+                },
+                "title": {
+                    "description": "title\nrequired: true\nexample: pixle",
+                    "type": "string",
+                    "example": "pixle"
+                },
+                "value": {
+                    "description": "value\nrequired: true\nexample: 360dpi",
+                    "type": "string",
+                    "example": "360dpi"
+                }
+            }
+        },
+        "dto.CreateNewAttributeResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.CreateNewUserRequest": {
+            "type": "object",
+            "properties": {
+                "appId": {
+                    "description": "AppId\nrequired: true\nexample: dfc97e2c-fbb2-11ec-b94a-e78cf3674adb",
+                    "type": "string",
+                    "example": "dfc97e2c-fbb2-11ec-b94a-e78cf3674adb"
+                },
+                "email": {
+                    "description": "email\nrequired: true\nexample: dave@customer.ai",
+                    "type": "string",
+                    "example": "dave@customer.ai"
+                },
+                "family": {
+                    "description": "family\nrequired: true\nexample: Richardson",
+                    "type": "string",
+                    "example": "Richardson"
+                },
+                "name": {
+                    "description": "Name\nrequired: true\nexample: Dave",
+                    "type": "string",
+                    "example": "Dave"
+                },
+                "password": {
+                    "description": "password\nrequired: true\nexample: P@ssw0rd",
+                    "type": "string",
+                    "example": "P@ssw0rd"
+                },
+                "phone": {
+                    "description": "phone\nrequired: false\nexample: +192400154",
+                    "type": "string",
+                    "example": "+192400154"
+                },
+                "username": {
+                    "description": "username\nrequired: true\nexample: drichardson@2003",
+                    "type": "string",
+                    "example": "drichardson@2003"
+                }
+            }
+        },
+        "dto.CreateNewUserResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.CreateNewWalletRequest": {
+            "type": "object",
+            "properties": {
+                "balance": {
+                    "description": "Balance\nrequired: true\nexample: 10.2",
+                    "type": "string",
+                    "example": "10.2"
+                },
+                "currency": {
+                    "description": "Currency\nrequired: true\nexample: eth",
+                    "type": "string",
+                    "example": "eth"
+                },
+                "owner": {
+                    "description": "Owner\nrequired: true\nexample: 57837364-fbb8-11ec-9b28-1784eb31e114",
+                    "type": "string",
+                    "example": "57837364-fbb8-11ec-9b28-1784eb31e114"
+                }
+            }
+        },
+        "dto.CreateNewWalletResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.GetAllApplicationsResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.GetAllAssetsResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.GetAllAttributesResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.GetAllUsersResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.GetAllWalletsResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.GetSingleApplicationResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.GetSingleAssetResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.GetSingleAttributeResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.GetSingleUserResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.GetSingleWalletResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.RemoveApplicationResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.RemoveAssetResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.RemoveAttributeResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.RemoveUserResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.RemoveWalletResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.UpdateApplicationRequest": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "description": "Title\nrequired: true\nexample: Book store",
+                    "type": "string",
+                    "example": "book store"
+                }
+            }
+        },
+        "dto.UpdateApplicationResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.UpdateAssetRequest": {
+            "type": "object",
+            "properties": {
+                "attribute": {
+                    "description": "attribute\nrequired: true\nexample: {\"length\": 360}",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "[\"21254\"]"
+                    ]
+                },
+                "eid": {
+                    "description": "External Id\nrequired: false\nexample: myapp-local-s4x9cS1S01M1D",
+                    "type": "string",
+                    "example": "myapp-local-s4x9cS1S01M1D"
+                },
+                "owner": {
+                    "description": "owner\nrequired: true\nexample: ali",
+                    "type": "string",
+                    "example": "360dpi"
+                },
+                "title": {
+                    "description": "title\nrequired: true\nexample: pixle",
+                    "type": "string",
+                    "example": "pixle"
+                }
+            }
+        },
+        "dto.UpdateAssetResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.UpdateAttributeRequest": {
+            "type": "object",
+            "properties": {
+                "eid": {
+                    "description": "External Id\nrequired: false\nexample: myapp-local-i8U8k7y0d9G1",
+                    "type": "string",
+                    "example": "myapp-local-i8U8k7y0d9G1"
+                },
+                "meta": {
+                    "description": "Meta\nrequired: true\nexample: {\"length\": 360}",
+                    "type": "string",
+                    "example": "{\"length\": 360}"
+                },
+                "title": {
+                    "description": "title\nrequired: true\nexample: pixle",
+                    "type": "string",
+                    "example": "pixle"
+                },
+                "value": {
+                    "description": "value\nrequired: true\nexample: 360dpi",
+                    "type": "string",
+                    "example": "360dpi"
+                }
+            }
+        },
+        "dto.UpdateAttributeResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.UpdateUserRequest": {
+            "type": "object",
+            "properties": {
+                "appId": {
+                    "description": "AppId\nrequired: true\nexample: dfc97e2c-fbb2-11ec-b94a-e78cf3674adb",
+                    "type": "string",
+                    "example": "dfc97e2c-fbb2-11ec-b94a-e78cf3674adb"
+                },
+                "email": {
+                    "description": "email\nrequired: true\nexample: dave@customer.ai",
+                    "type": "string",
+                    "example": "dave@customer.ai"
+                },
+                "family": {
+                    "description": "family\nrequired: true\nexample: Richardson",
+                    "type": "string",
+                    "example": "Richardson"
+                },
+                "name": {
+                    "description": "Name\nrequired: true\nexample: Dave",
+                    "type": "string",
+                    "example": "Dave"
+                }
+            }
+        },
+        "dto.UpdateUserResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "dto.UpdateWalletRequest": {
+            "type": "object",
+            "properties": {
+                "balance": {
+                    "description": "Balance\nrequired: true\nexample: 10.2",
+                    "type": "string",
+                    "example": "10.2"
+                },
+                "currency": {
+                    "description": "Currency\nrequired: true\nexample: eth",
+                    "type": "string",
+                    "example": "eth"
+                },
+                "owner": {
+                    "description": "Owner\nrequired: true\nexample: 57837364-fbb8-11ec-9b28-1784eb31e114",
+                    "type": "string",
+                    "example": "57837364-fbb8-11ec-9b28-1784eb31e114"
+                }
+            }
+        },
+        "dto.UpdateWalletResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "count": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "data": {},
+                "msg": {
+                    "type": "string",
+                    "example": "Your request recived."
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        }
+    }
+}

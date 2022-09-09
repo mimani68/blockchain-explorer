@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option go_package = "proto/";
+
+package proto;
+
+service BlockService {
+  rpc StoreBlockation (BlockRequest) returns (BlockResponse) {}
+  rpc Estimate (BlockRequest) returns (EstimateResponse) {}
+}
+
+message Block {
+  string id = 1;
+  string block = 2;
+}
+
+message BlockRequest {
+  string id = 1;
+  string block = 2;
+  string date = 3;
+}
+
+message BlockResponse {
+  bool success = 1;
+  repeated Block blocks = 2;
+}
+
+message EstimateResponse {
+  bool success = 1;
+  int32 count = 2;
+}

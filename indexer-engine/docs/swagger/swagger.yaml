@@ -1,0 +1,2008 @@
+basePath: /api
+definitions:
+  dto.CreateNewApplicationRequest:
+    properties:
+      title:
+        description: |-
+          Title
+          required: true
+          example: Book store
+        example: book store
+        type: string
+    type: object
+  dto.CreateNewApplicationResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.CreateNewAssetRequest:
+    properties:
+      attribute:
+        description: |-
+          attribute
+          required: true
+          example: {"length": 360}
+        example:
+        - '["21254"]'
+        items:
+          type: string
+        type: array
+      eid:
+        description: |-
+          External Id
+          required: false
+          example: myapp-local-s4x9cS1S01M1D
+        example: myapp-local-s4x9cS1S01M1D
+        type: string
+      owner:
+        description: |-
+          owner
+          required: true
+          example: ali
+        example: ali
+        type: string
+      title:
+        description: |-
+          title
+          required: true
+          example: Gem
+        example: Gem
+        type: string
+    type: object
+  dto.CreateNewAssetResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.CreateNewAttributeRequest:
+    properties:
+      eid:
+        description: |-
+          External Id
+          required: false
+          example: myapp-local-i8U8k7y0d9G1
+        example: myapp-local-i8U8k7y0d9G1
+        type: string
+      meta:
+        description: |-
+          value
+          required: true
+          example: {"length": 360}
+        example: '{"length": 360}'
+        type: string
+      title:
+        description: |-
+          title
+          required: true
+          example: pixle
+        example: pixle
+        type: string
+      value:
+        description: |-
+          value
+          required: true
+          example: 360dpi
+        example: 360dpi
+        type: string
+    type: object
+  dto.CreateNewAttributeResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.CreateNewUserRequest:
+    properties:
+      appId:
+        description: |-
+          AppId
+          required: true
+          example: dfc97e2c-fbb2-11ec-b94a-e78cf3674adb
+        example: dfc97e2c-fbb2-11ec-b94a-e78cf3674adb
+        type: string
+      email:
+        description: |-
+          email
+          required: true
+          example: dave@customer.ai
+        example: dave@customer.ai
+        type: string
+      family:
+        description: |-
+          family
+          required: true
+          example: Richardson
+        example: Richardson
+        type: string
+      name:
+        description: |-
+          Name
+          required: true
+          example: Dave
+        example: Dave
+        type: string
+      password:
+        description: |-
+          password
+          required: true
+          example: P@ssw0rd
+        example: P@ssw0rd
+        type: string
+      phone:
+        description: |-
+          phone
+          required: false
+          example: +192400154
+        example: "+192400154"
+        type: string
+      username:
+        description: |-
+          username
+          required: true
+          example: drichardson@2003
+        example: drichardson@2003
+        type: string
+    type: object
+  dto.CreateNewUserResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.CreateNewWalletRequest:
+    properties:
+      balance:
+        description: |-
+          Balance
+          required: true
+          example: 10.2
+        example: "10.2"
+        type: string
+      currency:
+        description: |-
+          Currency
+          required: true
+          example: eth
+        example: eth
+        type: string
+      owner:
+        description: |-
+          Owner
+          required: true
+          example: 57837364-fbb8-11ec-9b28-1784eb31e114
+        example: 57837364-fbb8-11ec-9b28-1784eb31e114
+        type: string
+    type: object
+  dto.CreateNewWalletResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.GetAllApplicationsResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.GetAllAssetsResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.GetAllAttributesResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.GetAllUsersResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.GetAllWalletsResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.GetSingleApplicationResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.GetSingleAssetResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.GetSingleAttributeResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.GetSingleUserResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.GetSingleWalletResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.RemoveApplicationResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.RemoveAssetResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.RemoveAttributeResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.RemoveUserResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.RemoveWalletResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.UpdateApplicationRequest:
+    properties:
+      title:
+        description: |-
+          Title
+          required: true
+          example: Book store
+        example: book store
+        type: string
+    type: object
+  dto.UpdateApplicationResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.UpdateAssetRequest:
+    properties:
+      attribute:
+        description: |-
+          attribute
+          required: true
+          example: {"length": 360}
+        example:
+        - '["21254"]'
+        items:
+          type: string
+        type: array
+      eid:
+        description: |-
+          External Id
+          required: false
+          example: myapp-local-s4x9cS1S01M1D
+        example: myapp-local-s4x9cS1S01M1D
+        type: string
+      owner:
+        description: |-
+          owner
+          required: true
+          example: ali
+        example: 360dpi
+        type: string
+      title:
+        description: |-
+          title
+          required: true
+          example: pixle
+        example: pixle
+        type: string
+    type: object
+  dto.UpdateAssetResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.UpdateAttributeRequest:
+    properties:
+      eid:
+        description: |-
+          External Id
+          required: false
+          example: myapp-local-i8U8k7y0d9G1
+        example: myapp-local-i8U8k7y0d9G1
+        type: string
+      meta:
+        description: |-
+          Meta
+          required: true
+          example: {"length": 360}
+        example: '{"length": 360}'
+        type: string
+      title:
+        description: |-
+          title
+          required: true
+          example: pixle
+        example: pixle
+        type: string
+      value:
+        description: |-
+          value
+          required: true
+          example: 360dpi
+        example: 360dpi
+        type: string
+    type: object
+  dto.UpdateAttributeResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.UpdateUserRequest:
+    properties:
+      appId:
+        description: |-
+          AppId
+          required: true
+          example: dfc97e2c-fbb2-11ec-b94a-e78cf3674adb
+        example: dfc97e2c-fbb2-11ec-b94a-e78cf3674adb
+        type: string
+      email:
+        description: |-
+          email
+          required: true
+          example: dave@customer.ai
+        example: dave@customer.ai
+        type: string
+      family:
+        description: |-
+          family
+          required: true
+          example: Richardson
+        example: Richardson
+        type: string
+      name:
+        description: |-
+          Name
+          required: true
+          example: Dave
+        example: Dave
+        type: string
+    type: object
+  dto.UpdateUserResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.UpdateWalletRequest:
+    properties:
+      balance:
+        description: |-
+          Balance
+          required: true
+          example: 10.2
+        example: "10.2"
+        type: string
+      currency:
+        description: |-
+          Currency
+          required: true
+          example: eth
+        example: eth
+        type: string
+      owner:
+        description: |-
+          Owner
+          required: true
+          example: 57837364-fbb8-11ec-9b28-1784eb31e114
+        example: 57837364-fbb8-11ec-9b28-1784eb31e114
+        type: string
+    type: object
+  dto.UpdateWalletResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      count:
+        example: 2
+        type: integer
+      data: {}
+      msg:
+        example: Your request recived.
+        type: string
+      status:
+        example: true
+        type: boolean
+    type: object
+host: app.io:3000
+info:
+  contact:
+    email: support@app.io
+    name: API Support
+    url: http://app.io/support
+  description: Server side Crypto Indexer
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://app.io/api
+  title: Crypto Indexer
+  version: "1.0"
+paths:
+  /apps:
+    get:
+      consumes:
+      - application/json
+      description: Retrive list of active applications order by date
+      operationId: get-all-applications
+      parameters:
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Status
+        enum:
+        - ACTIVE
+        - PENDING
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.GetAllApplicationsResponse'
+        "204":
+          description: Empty list
+          schema:
+            $ref: '#/definitions/dto.GetAllApplicationsResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/dto.GetAllApplicationsResponse'
+        "401":
+          description: You are not authorized application.
+          schema:
+            $ref: '#/definitions/dto.GetAllApplicationsResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.GetAllApplicationsResponse'
+      summary: Get all applications
+      tags:
+      - application
+    post:
+      consumes:
+      - application/json
+      description: Create new application
+      operationId: create-new-application
+      parameters:
+      - description: Create new application payload
+        in: body
+        name: Application
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateNewApplicationRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.CreateNewApplicationResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.CreateNewApplicationResponse'
+        "401":
+          description: You are not authorized application.
+          schema:
+            $ref: '#/definitions/dto.CreateNewApplicationResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.CreateNewApplicationResponse'
+      summary: Create new application
+      tags:
+      - application
+  /apps/{applicationId}:
+    delete:
+      consumes:
+      - application/json
+      description: Soft delete application
+      operationId: soft-delete-application
+      parameters:
+      - description: Application ID/UUID
+        in: path
+        name: applicationId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.RemoveApplicationResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.RemoveApplicationResponse'
+        "401":
+          description: You are not authorized application.
+          schema:
+            $ref: '#/definitions/dto.RemoveApplicationResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.RemoveApplicationResponse'
+      summary: Soft delete application
+      tags:
+      - application
+    get:
+      consumes:
+      - application/json
+      description: Retrive application object by ID
+      operationId: get-application-by-id
+      parameters:
+      - description: Application ID/UUID
+        in: path
+        name: applicationId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.GetSingleApplicationResponse'
+        "204":
+          description: Empty responce
+          schema:
+            $ref: '#/definitions/dto.GetSingleApplicationResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.GetSingleApplicationResponse'
+        "401":
+          description: You are not authorized application.
+          schema:
+            $ref: '#/definitions/dto.GetSingleApplicationResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.GetSingleApplicationResponse'
+      summary: Get signle application by id
+      tags:
+      - application
+    patch:
+      consumes:
+      - application/json
+      description: Update application
+      operationId: update-application
+      parameters:
+      - description: Application ID/UUID
+        in: path
+        name: applicationId
+        required: true
+        type: string
+      - description: Update application payload
+        in: body
+        name: Application
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateApplicationRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.UpdateApplicationResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.UpdateApplicationResponse'
+        "401":
+          description: You are not authorized application.
+          schema:
+            $ref: '#/definitions/dto.UpdateApplicationResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.UpdateApplicationResponse'
+      summary: Update application
+      tags:
+      - application
+  /apps/{applicationId}/permanent:
+    delete:
+      consumes:
+      - application/json
+      description: Delete application
+      operationId: delete-application
+      parameters:
+      - description: Application ID/UUID
+        in: path
+        name: applicationId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.RemoveApplicationResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.RemoveApplicationResponse'
+        "401":
+          description: You are not authorized application.
+          schema:
+            $ref: '#/definitions/dto.RemoveApplicationResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.RemoveApplicationResponse'
+      summary: Delete application
+      tags:
+      - application
+  /assets:
+    get:
+      consumes:
+      - application/json
+      description: Retrive list of active assets order by date
+      operationId: get-all-assets
+      parameters:
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Status
+        enum:
+        - ACTIVE
+        - PENDING
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.GetAllAssetsResponse'
+        "204":
+          description: Empty list
+          schema:
+            $ref: '#/definitions/dto.GetAllAssetsResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/dto.GetAllAssetsResponse'
+        "401":
+          description: You are not authorized asset.
+          schema:
+            $ref: '#/definitions/dto.GetAllAssetsResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.GetAllAssetsResponse'
+      summary: Get all assets
+      tags:
+      - asset
+    post:
+      consumes:
+      - application/json
+      description: Create new asset
+      operationId: create-new-asset
+      parameters:
+      - description: Create new asset payload
+        in: body
+        name: Asset
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateNewAssetRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.CreateNewAssetResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.CreateNewAssetResponse'
+        "401":
+          description: You are not authorized asset.
+          schema:
+            $ref: '#/definitions/dto.CreateNewAssetResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.CreateNewAssetResponse'
+      summary: Create new asset
+      tags:
+      - asset
+  /assets/{assetId}:
+    delete:
+      consumes:
+      - application/json
+      description: Soft delete asset
+      operationId: soft-delete-asset
+      parameters:
+      - description: Asset ID/UUID
+        in: path
+        name: assetId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.RemoveAssetResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.RemoveAssetResponse'
+        "401":
+          description: You are not authorized asset.
+          schema:
+            $ref: '#/definitions/dto.RemoveAssetResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.RemoveAssetResponse'
+      summary: Soft delete asset
+      tags:
+      - asset
+    get:
+      consumes:
+      - application/json
+      description: Retrive asset object by ID
+      operationId: get-asset-by-id
+      parameters:
+      - description: Asset ID/UUID
+        in: path
+        name: assetId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.GetSingleAssetResponse'
+        "204":
+          description: Empty responce
+          schema:
+            $ref: '#/definitions/dto.GetSingleAssetResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.GetSingleAssetResponse'
+        "401":
+          description: You are not authorized asset.
+          schema:
+            $ref: '#/definitions/dto.GetSingleAssetResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.GetSingleAssetResponse'
+      summary: Get signle asset by id
+      tags:
+      - asset
+    patch:
+      consumes:
+      - application/json
+      description: Update asset
+      operationId: update-asset
+      parameters:
+      - description: Asset ID/UUID
+        in: path
+        name: assetId
+        required: true
+        type: string
+      - description: Update asset payload
+        in: body
+        name: Asset
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateAssetRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.UpdateAssetResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.UpdateAssetResponse'
+        "401":
+          description: You are not authorized asset.
+          schema:
+            $ref: '#/definitions/dto.UpdateAssetResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.UpdateAssetResponse'
+      summary: Update asset
+      tags:
+      - asset
+  /assets/{assetId}/permanent:
+    delete:
+      consumes:
+      - application/json
+      description: Delete asset
+      operationId: delete-asset
+      parameters:
+      - description: Asset ID/UUID
+        in: path
+        name: assetId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.RemoveAssetResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.RemoveAssetResponse'
+        "401":
+          description: You are not authorized asset.
+          schema:
+            $ref: '#/definitions/dto.RemoveAssetResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.RemoveAssetResponse'
+      summary: Delete asset
+      tags:
+      - asset
+  /attributes:
+    get:
+      consumes:
+      - application/json
+      description: Retrive list of active attributes order by date
+      operationId: get-all-attributes
+      parameters:
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Status
+        enum:
+        - ACTIVE
+        - PENDING
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.GetAllAttributesResponse'
+        "204":
+          description: Empty list
+          schema:
+            $ref: '#/definitions/dto.GetAllAttributesResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/dto.GetAllAttributesResponse'
+        "401":
+          description: You are not authorized attribute.
+          schema:
+            $ref: '#/definitions/dto.GetAllAttributesResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.GetAllAttributesResponse'
+      summary: Get all attributes
+      tags:
+      - attribute
+    post:
+      consumes:
+      - application/json
+      description: Create new attribute
+      operationId: create-new-attribute
+      parameters:
+      - description: Create new attribute payload
+        in: body
+        name: Attribute
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateNewAttributeRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.CreateNewAttributeResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.CreateNewAttributeResponse'
+        "401":
+          description: You are not authorized attribute.
+          schema:
+            $ref: '#/definitions/dto.CreateNewAttributeResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.CreateNewAttributeResponse'
+      summary: Create new attribute
+      tags:
+      - attribute
+  /attributes/{attributeId}:
+    delete:
+      consumes:
+      - application/json
+      description: Soft delete attribute
+      operationId: soft-delete-attribute
+      parameters:
+      - description: Attribute ID/UUID
+        in: path
+        name: attributeId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.RemoveAttributeResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.RemoveAttributeResponse'
+        "401":
+          description: You are not authorized attribute.
+          schema:
+            $ref: '#/definitions/dto.RemoveAttributeResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.RemoveAttributeResponse'
+      summary: Soft delete attribute
+      tags:
+      - attribute
+    get:
+      consumes:
+      - application/json
+      description: Retrive attribute object by ID
+      operationId: get-attribute-by-id
+      parameters:
+      - description: Attribute ID/UUID
+        in: path
+        name: attributeId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.GetSingleAttributeResponse'
+        "204":
+          description: Empty responce
+          schema:
+            $ref: '#/definitions/dto.GetSingleAttributeResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.GetSingleAttributeResponse'
+        "401":
+          description: You are not authorized attribute.
+          schema:
+            $ref: '#/definitions/dto.GetSingleAttributeResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.GetSingleAttributeResponse'
+      summary: Get signle attribute by id
+      tags:
+      - attribute
+    patch:
+      consumes:
+      - application/json
+      description: Update attribute
+      operationId: update-attribute
+      parameters:
+      - description: Attribute ID/UUID
+        in: path
+        name: attributeId
+        required: true
+        type: string
+      - description: Update attribute payload
+        in: body
+        name: Attribute
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateAttributeRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.UpdateAttributeResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.UpdateAttributeResponse'
+        "401":
+          description: You are not authorized attribute.
+          schema:
+            $ref: '#/definitions/dto.UpdateAttributeResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.UpdateAttributeResponse'
+      summary: Update attribute
+      tags:
+      - attribute
+  /attributes/{attributeId}/permanent:
+    delete:
+      consumes:
+      - application/json
+      description: Delete attribute
+      operationId: delete-attribute
+      parameters:
+      - description: Attribute ID/UUID
+        in: path
+        name: attributeId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.RemoveAttributeResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.RemoveAttributeResponse'
+        "401":
+          description: You are not authorized attribute.
+          schema:
+            $ref: '#/definitions/dto.RemoveAttributeResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.RemoveAttributeResponse'
+      summary: Delete attribute
+      tags:
+      - attribute
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Retrive list of active users order by date
+      operationId: get-all-users
+      parameters:
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Status
+        enum:
+        - ACTIVE
+        - PENDING
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.GetAllUsersResponse'
+        "204":
+          description: Empty list
+          schema:
+            $ref: '#/definitions/dto.GetAllUsersResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/dto.GetAllUsersResponse'
+        "401":
+          description: You are not authorized user.
+          schema:
+            $ref: '#/definitions/dto.GetAllUsersResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.GetAllUsersResponse'
+      summary: Get all users
+      tags:
+      - user
+    post:
+      consumes:
+      - application/json
+      description: Create new user
+      operationId: create-new-user
+      parameters:
+      - description: Create new user payload
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateNewUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.CreateNewUserResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.CreateNewUserResponse'
+        "401":
+          description: You are not authorized user.
+          schema:
+            $ref: '#/definitions/dto.CreateNewUserResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.CreateNewUserResponse'
+      summary: Create new user
+      tags:
+      - user
+  /users/{userId}:
+    delete:
+      consumes:
+      - application/json
+      description: Soft delete user
+      operationId: soft-delete-user
+      parameters:
+      - description: User ID/UUID
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.RemoveUserResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.RemoveUserResponse'
+        "401":
+          description: You are not authorized user.
+          schema:
+            $ref: '#/definitions/dto.RemoveUserResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.RemoveUserResponse'
+      summary: Soft delete user
+      tags:
+      - user
+    get:
+      consumes:
+      - application/json
+      description: Retrive user object by ID
+      operationId: get-user-by-id
+      parameters:
+      - description: User ID/UUID
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.GetSingleUserResponse'
+        "204":
+          description: Empty responce
+          schema:
+            $ref: '#/definitions/dto.GetSingleUserResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.GetSingleUserResponse'
+        "401":
+          description: You are not authorized user.
+          schema:
+            $ref: '#/definitions/dto.GetSingleUserResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.GetSingleUserResponse'
+      summary: Get signle user by id
+      tags:
+      - user
+    patch:
+      consumes:
+      - application/json
+      description: Update user
+      operationId: update-user
+      parameters:
+      - description: User ID/UUID
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: Update user payload
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.UpdateUserResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.UpdateUserResponse'
+        "401":
+          description: You are not authorized user.
+          schema:
+            $ref: '#/definitions/dto.UpdateUserResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.UpdateUserResponse'
+      summary: Update user
+      tags:
+      - user
+  /users/{userId}/permanent:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user
+      operationId: delete-user
+      parameters:
+      - description: User ID/UUID
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.RemoveUserResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.RemoveUserResponse'
+        "401":
+          description: You are not authorized user.
+          schema:
+            $ref: '#/definitions/dto.RemoveUserResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.RemoveUserResponse'
+      summary: Delete user
+      tags:
+      - user
+  /users/{userId}/status:
+    post:
+      consumes:
+      - application/json
+      description: Update user status
+      operationId: change-user-status
+      parameters:
+      - description: User ID/UUID
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: Update user payload
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.UpdateUserResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.UpdateUserResponse'
+        "401":
+          description: You are not authorized user.
+          schema:
+            $ref: '#/definitions/dto.UpdateUserResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.UpdateUserResponse'
+      summary: Update user status
+      tags:
+      - user
+  /wallets:
+    get:
+      consumes:
+      - application/json
+      description: Retrive list of active wallets order by date
+      operationId: get-all-wallets
+      parameters:
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Status
+        enum:
+        - ACTIVE
+        - PENDING
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.GetAllWalletsResponse'
+        "204":
+          description: Empty list
+          schema:
+            $ref: '#/definitions/dto.GetAllWalletsResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/dto.GetAllWalletsResponse'
+        "401":
+          description: You are not authorized wallet.
+          schema:
+            $ref: '#/definitions/dto.GetAllWalletsResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.GetAllWalletsResponse'
+      summary: Get all wallets
+      tags:
+      - wallet
+    post:
+      consumes:
+      - application/json
+      description: Create new wallet
+      operationId: create-new-wallet
+      parameters:
+      - description: Create new wallet payload
+        in: body
+        name: Wallet
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateNewWalletRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.CreateNewWalletResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.CreateNewWalletResponse'
+        "401":
+          description: You are not authorized wallet.
+          schema:
+            $ref: '#/definitions/dto.CreateNewWalletResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.CreateNewWalletResponse'
+      summary: Create new wallet
+      tags:
+      - wallet
+  /wallets/{walletId}:
+    delete:
+      consumes:
+      - application/json
+      description: Soft delete wallet
+      operationId: soft-delete-wallet
+      parameters:
+      - description: Wallet ID/UUID
+        in: path
+        name: walletId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.RemoveWalletResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.RemoveWalletResponse'
+        "401":
+          description: You are not authorized wallet.
+          schema:
+            $ref: '#/definitions/dto.RemoveWalletResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.RemoveWalletResponse'
+      summary: Soft delete wallet
+      tags:
+      - wallet
+    get:
+      consumes:
+      - application/json
+      description: Retrive wallet object by ID
+      operationId: get-wallet-by-id
+      parameters:
+      - description: Wallet ID/UUID
+        in: path
+        name: walletId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.GetSingleWalletResponse'
+        "204":
+          description: Empty responce
+          schema:
+            $ref: '#/definitions/dto.GetSingleWalletResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.GetSingleWalletResponse'
+        "401":
+          description: You are not authorized wallet.
+          schema:
+            $ref: '#/definitions/dto.GetSingleWalletResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.GetSingleWalletResponse'
+      summary: Get signle wallet by id
+      tags:
+      - wallet
+    patch:
+      consumes:
+      - application/json
+      description: Update wallet
+      operationId: update-wallet
+      parameters:
+      - description: Wallet ID/UUID
+        in: path
+        name: walletId
+        required: true
+        type: string
+      - description: Update wallet payload
+        in: body
+        name: Wallet
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateWalletRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "401":
+          description: You are not authorized wallet.
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+      summary: Update wallet
+      tags:
+      - wallet
+  /wallets/{walletId}/charge:
+    post:
+      consumes:
+      - application/json
+      description: Charge wallet
+      operationId: charge-wallet
+      parameters:
+      - description: Wallet ID/UUID
+        in: path
+        name: walletId
+        required: true
+        type: string
+      - description: Update wallet payload
+        in: body
+        name: Wallet
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateWalletRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "401":
+          description: You are not authorized wallet.
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+      summary: Charge wallet
+      tags:
+      - wallet
+  /wallets/{walletId}/deduct:
+    post:
+      consumes:
+      - application/json
+      description: Deduct wallet
+      operationId: deduct-wallet
+      parameters:
+      - description: Wallet ID/UUID
+        in: path
+        name: walletId
+        required: true
+        type: string
+      - description: Update wallet payload
+        in: body
+        name: Wallet
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateWalletRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "401":
+          description: You are not authorized wallet.
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+      summary: Deduct wallet
+      tags:
+      - wallet
+  /wallets/{walletId}/exchange:
+    post:
+      consumes:
+      - application/json
+      description: Exchange wallet
+      operationId: exchange-wallet
+      parameters:
+      - description: Wallet ID/UUID
+        in: path
+        name: walletId
+        required: true
+        type: string
+      - description: Update wallet payload
+        in: body
+        name: Wallet
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateWalletRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok    response
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "401":
+          description: You are not authorized wallet.
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.UpdateWalletResponse'
+      summary: Exchange wallet
+      tags:
+      - wallet
+  /wallets/{walletId}/permanent:
+    delete:
+      consumes:
+      - application/json
+      description: Delete wallet
+      operationId: delete-wallet
+      parameters:
+      - description: Wallet ID/UUID
+        in: path
+        name: walletId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Ok response
+          schema:
+            $ref: '#/definitions/dto.RemoveWalletResponse'
+        "400":
+          description: Something bad happened
+          schema:
+            $ref: '#/definitions/dto.RemoveWalletResponse'
+        "401":
+          description: You are not authorized wallet.
+          schema:
+            $ref: '#/definitions/dto.RemoveWalletResponse'
+        "403":
+          description: You hasn't access level for this resource
+          schema:
+            $ref: '#/definitions/dto.RemoveWalletResponse'
+      summary: Delete wallet
+      tags:
+      - wallet
+swagger: "2.0"

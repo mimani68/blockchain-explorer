@@ -1,0 +1,15 @@
+
+database:
+  type: clickhouse
+  uri: tcp://localhost:9001?database=app
+  # uri: tcp://clickhouse:9000?database=gorm&username=gorm&password=gorm&read_timeout=10&write_timeout=20
+  name: indexer
+
+server:
+  env: development
+  host: "0.0.0.0"
+  port: 3000
+  prefix: '/api'
+  cron_job_interval: 60
+  authentication_plugin: keyclock
+  tatum_api_token: b211febc-6e35-4430-959d-9ae103799f4b
