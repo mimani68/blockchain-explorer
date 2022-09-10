@@ -10,7 +10,7 @@ import (
 	"app.io/pkg/httpRequest"
 )
 
-func GetCurtentBlockNumber(netwrok string) (currentNumber int, err error) {
+func GetCurrentBlockNumber(netwrok string) (currentNumber int, err error) {
 	// curl https://api.blockchair.com/bitcoin/stats
 	url := "https://api.blockchair.com/" + netwrok + "/stats"
 	result := httpRequest.Get(url, map[string]string{})
