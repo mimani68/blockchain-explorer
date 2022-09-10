@@ -6,12 +6,12 @@ option go_package = "service/";
 
 message TransactionResponse {
   bool success = 1;
-  bool error = 2;
+  string message = 2;
   Transaction transaction = 3;
 }
 
 message TransactionRequest {
-  int64 transactionHash = 1;
+  string transactionHash = 1;
 }
 
 message Transaction {

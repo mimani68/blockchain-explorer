@@ -15,3 +15,22 @@ service BlockService {
   rpc GetBlock(BlockRequest) returns (BlockResponse) {}
 }
 
+service StatsService {
+  rpc Stat(StatsRequest) returns (StatsResponse) {}
+}
+
+message StatsResponse {
+  bool success = 1;
+  string message = 2;
+  Stats stats = 3;
+}
+
+message StatsRequest {
+  int64 startBlock = 1;
+  int64 endBlock = 2;
+}
+
+message Stats {
+  string totalAmount = 1;
+  string totalTransactions = 2;
+}

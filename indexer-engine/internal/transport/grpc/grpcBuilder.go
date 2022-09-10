@@ -21,6 +21,10 @@ func grpcServerBuilder(listener net.Listener, cfg config.Config, blockRepo *repo
 
 	blockService := service.NewBlockService(blockRepo, proto_service.UnimplementedBlockServiceServer{})
 	proto_service.RegisterBlockServiceServer(grpcServer, blockService)
+	statService := service.NewStatsService(proto_service.UnimplementedStatsServiceServer{})
+	proto_service.RegisterStatsServiceServer(grpcServer, statService)
+	trxService := service.NewTransactionService(proto_service.UnimplementedTransactionServiceServer{})
+	proto_service.RegisterTransactionServiceServer(grpcServer, trxService)
 	reflection.Register(grpcServer)
 
 	go func() {

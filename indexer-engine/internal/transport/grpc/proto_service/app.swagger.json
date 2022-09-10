@@ -40,11 +40,36 @@
         "success": {
           "type": "boolean"
         },
-        "error": {
-          "type": "boolean"
+        "message": {
+          "type": "string"
         },
         "block": {
           "$ref": "#/definitions/apiBlock"
+        }
+      }
+    },
+    "apiStats": {
+      "type": "object",
+      "properties": {
+        "totalAmount": {
+          "type": "string"
+        },
+        "totalTransactions": {
+          "type": "string"
+        }
+      }
+    },
+    "apiStatsResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "stats": {
+          "$ref": "#/definitions/apiStats"
         }
       }
     },
@@ -80,8 +105,8 @@
         "success": {
           "type": "boolean"
         },
-        "error": {
-          "type": "boolean"
+        "message": {
+          "type": "string"
         },
         "transaction": {
           "$ref": "#/definitions/apiTransaction"

@@ -8,7 +8,7 @@ import "internal/transport/grpc/proto_service/transaction.proto";
 
 message BlockResponse {
   bool success = 1;
-  bool error = 2;
+  string message = 2;
   Block block = 3;
 }
 

@@ -16,6 +16,9 @@ type BlockService struct {
 }
 
 func (blockSrv *BlockService) GetBlock(ctx context.Context, blockNumber *proto_service.BlockRequest) (*proto_service.BlockResponse, error) {
+	if blockNumber.BlockNumber <= 0 {
+		blockNumber.BlockNumber = 15507757
+	}
 	return &proto_service.BlockResponse{
 		Success: true,
 		Block: &proto_service.Block{
