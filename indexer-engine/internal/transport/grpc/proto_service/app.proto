@@ -34,3 +34,18 @@ message Stats {
   string totalAmount = 1;
   string totalTransactions = 2;
 }
+
+service ScanService {
+  rpc FreshScan(ScanRequest) returns (ScanResponse) {}
+}
+
+message ScanResponse {
+  bool success = 1;
+  string message = 2;
+  Block block = 3;
+}
+
+message ScanRequest {
+  int64 startBlock = 1;
+  int64 endBlock = 2;
+}

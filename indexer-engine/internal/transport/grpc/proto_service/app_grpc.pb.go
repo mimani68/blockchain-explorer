@@ -275,3 +275,89 @@ var StatsService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "internal/transport/grpc/proto_service/app.proto",
 }
+
+// ScanServiceClient is the client API for ScanService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type ScanServiceClient interface {
+	FreshScan(ctx context.Context, in *ScanRequest, opts ...grpc.CallOption) (*ScanResponse, error)
+}
+
+type scanServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewScanServiceClient(cc grpc.ClientConnInterface) ScanServiceClient {
+	return &scanServiceClient{cc}
+}
+
+func (c *scanServiceClient) FreshScan(ctx context.Context, in *ScanRequest, opts ...grpc.CallOption) (*ScanResponse, error) {
+	out := new(ScanResponse)
+	err := c.cc.Invoke(ctx, "/io.app.price.api.ScanService/FreshScan", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ScanServiceServer is the server API for ScanService service.
+// All implementations must embed UnimplementedScanServiceServer
+// for forward compatibility
+type ScanServiceServer interface {
+	FreshScan(context.Context, *ScanRequest) (*ScanResponse, error)
+	mustEmbedUnimplementedScanServiceServer()
+}
+
+// UnimplementedScanServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedScanServiceServer struct {
+}
+
+func (UnimplementedScanServiceServer) FreshScan(context.Context, *ScanRequest) (*ScanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FreshScan not implemented")
+}
+func (UnimplementedScanServiceServer) mustEmbedUnimplementedScanServiceServer() {}
+
+// UnsafeScanServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ScanServiceServer will
+// result in compilation errors.
+type UnsafeScanServiceServer interface {
+	mustEmbedUnimplementedScanServiceServer()
+}
+
+func RegisterScanServiceServer(s grpc.ServiceRegistrar, srv ScanServiceServer) {
+	s.RegisterService(&ScanService_ServiceDesc, srv)
+}
+
+func _ScanService_FreshScan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ScanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScanServiceServer).FreshScan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/io.app.price.api.ScanService/FreshScan",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScanServiceServer).FreshScan(ctx, req.(*ScanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// ScanService_ServiceDesc is the grpc.ServiceDesc for ScanService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var ScanService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "io.app.price.api.ScanService",
+	HandlerType: (*ScanServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "FreshScan",
+			Handler:    _ScanService_FreshScan_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "internal/transport/grpc/proto_service/app.proto",
+}

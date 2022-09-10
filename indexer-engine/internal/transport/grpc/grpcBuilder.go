@@ -25,18 +25,17 @@ func GrpcServerBuilder(listener net.Listener, cfg config.Config, status chan str
 	proto_service.RegisterStatsServiceServer(grpcServer, statService)
 	trxService := service.NewTransactionService(proto_service.UnimplementedTransactionServiceServer{})
 	proto_service.RegisterTransactionServiceServer(grpcServer, trxService)
+	scanService := service.NewScanService(proto_service.UnimplementedScanServiceServer{})
+	proto_service.RegisterScanServiceServer(grpcServer, scanService)
 	reflection.Register(grpcServer)
 
-	// grpcServerStatus := make(chan string)
 	go func() {
-		status <- "SERVER_IS_AVAIALBE"
 		if err := grpcServer.Serve(listener); err != nil {
 			logHandler.Log(logHandler.INFO, err.Error(), "GRPC")
-		} else {
-			logHandler.Log(logHandler.INFO, "gRPC server is active", "GRPC")
 		}
 	}()
 	logHandler.Log(logHandler.INFO, fmt.Sprintf("server listening at %v", listener.Addr()))
+	status <- "SERVER_IS_AVAIALBE"
 
 	c := make(chan os.Signal)
 	signal.Notify(c, os.Interrupt)

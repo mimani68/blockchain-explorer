@@ -48,6 +48,20 @@
         }
       }
     },
+    "apiScanResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "block": {
+          "$ref": "#/definitions/apiBlock"
+        }
+      }
+    },
     "apiStats": {
       "type": "object",
       "properties": {
