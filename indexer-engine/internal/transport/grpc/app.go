@@ -7,6 +7,7 @@ import (
 
 	"app.io/config"
 	"app.io/internal/data/db"
+	"app.io/internal/data/repository"
 	"app.io/internal/job"
 	"app.io/pkg/logHandler"
 )
@@ -28,14 +29,17 @@ func RunServer() {
 	dbInstance := db.NewDatabase(*cfg)
 	dbInstance.AutoMigrate()
 
+	blockRepo := repository.CreateBlockRepository(*cfg, *dbInstance.Db)
+	transactionRepo := repository.CreateTransactionRepository(*cfg, *dbInstance.Db)
+
 	//
 	// Capture network data in background
 	//
-	go job.BackgroundProcesses(*cfg, dbInstance)
+	go job.BackgroundProcesses(*cfg, blockRepo, transactionRepo)
 
 	//
 	// Serve data using gRPC format to other internal systems
 	//
-	grpcServerBuilder(listener, *cfg, dbInstance)
+	grpcServerBuilder(listener, *cfg, blockRepo, transactionRepo)
 
 }

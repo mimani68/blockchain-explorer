@@ -7,11 +7,12 @@ import (
 	"strconv"
 
 	"app.io/internal/data/domain"
+	"app.io/internal/data/dto"
 	"app.io/pkg/httpRequest"
 )
 
 type blockPayloadWrapper struct {
-	Transactions []domain.Transaction `json:"transactions"`
+	Transactions []dto.TatumTransaction `json:"transactions"`
 }
 
 func GetCurtentBlockNumber(network, vendorToken string) (currentNumber int, err error) {
@@ -39,7 +40,18 @@ func GetBlockData(network string, blockNumber int, vendorToken string) (block do
 	json.Unmarshal([]byte(blockResponse), &block)
 	tmp := blockPayloadWrapper{}
 	json.Unmarshal([]byte(blockResponse), &tmp)
-	trx = tmp.Transactions
+	for _, item := range tmp.Transactions {
+		p := domain.Transaction{
+			BlockNumber: int64(item.BlockNumber),
+			Hash:        item.Hash,
+			From:        item.From,
+			To:          item.To,
+			Nonce:       int64(item.Nonce),
+		}
+		amount, _ := strconv.Atoi(item.Amount)
+		p.Amount = int64(amount)
+		trx = append(trx, p)
+	}
 
 	return
 }

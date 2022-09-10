@@ -15,7 +15,7 @@ func Log(level string, msg string, tag ...string) {
 	if tag != nil {
 		fmt.Println("[" + level + "][" + tag[0] + "] " + msg)
 	} else {
-		fmt.Println("[" + level + "]" + msg)
+		fmt.Println("[" + level + "] " + msg)
 	}
 }
 
@@ -24,6 +24,6 @@ func Debug(msg string, payload interface{}, tag ...string) {
 	if tag != nil {
 		fmt.Println("[DEBUG]["+tag[0]+"] "+msg+" data:", string(payloadString))
 	} else {
-		fmt.Println("[DEBUG]" + msg)
+		fmt.Println("[DEBUG] " + msg)
 	}
 }

@@ -7,7 +7,6 @@ import (
 	"os/signal"
 
 	"app.io/config"
-	"app.io/internal/data/db"
 	"app.io/internal/data/repository"
 	proto_service "app.io/internal/transport/grpc/proto_service"
 	"app.io/internal/transport/grpc/service"
@@ -15,11 +14,10 @@ import (
 	"google.golang.org/grpc"
 )
 
-func grpcServerBuilder(listener net.Listener, cfg config.Config, db db.Database) {
+func grpcServerBuilder(listener net.Listener, cfg config.Config, blockRepo *repository.BlockRepository, transactionRepo *repository.TransactionRepository) {
 	serverOptions := []grpc.ServerOption{}
 	grpcServer := grpc.NewServer(serverOptions...)
 
-	blockRepo := repository.CreateBlockRepository(cfg, *db.Db)
 	blockService := service.NewBlockService(blockRepo, proto_service.UnimplementedBlockServiceServer{})
 	proto_service.RegisterBlockServiceServer(grpcServer, blockService)
 

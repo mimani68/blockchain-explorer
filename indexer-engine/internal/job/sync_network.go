@@ -5,13 +5,13 @@ import (
 	"time"
 
 	"app.io/config"
-	"app.io/internal/data/db"
 	"app.io/internal/data/domain"
+	"app.io/internal/data/repository"
 	"app.io/pkg/logHandler"
 	tatumNetworkExporlorer "app.io/pkg/tatum"
 )
 
-func SyncNetwork(cfg config.Config, db db.Database) {
+func SyncNetwork(cfg config.Config, blockRepo *repository.BlockRepository, transactionRepo *repository.TransactionRepository) {
 	logHandler.Log(logHandler.INFO, "Start background process")
 	blockState := 0
 	networkList := []string{cfg.Server.NetworkTitle}
@@ -36,22 +36,23 @@ func SyncNetwork(cfg config.Config, db db.Database) {
 			block, trxList := tatumNetworkExporlorer.GetBlockData(network, blockState, cfg.Server.TatumApiToken)
 			// logHandler.Log(logHandler.INFO, fmt.Sprintf("block %v", block))
 			// logHandler.Log(logHandler.INFO, fmt.Sprintf("trx list %v", trxList))
-			_ = trxList
 			blockInstance := domain.Block{
 				TxCount: int64(len(trxList)),
 				Hash:    block.Hash,
-				Number:  block.Number,
+				Number:  int64(block.Number),
 			}
-			result := db.Db.Create(&blockInstance)
-			if result.Error == nil {
-				logHandler.Log(logHandler.INFO, fmt.Sprintf("block %s storing was successfully", blockInstance.Hash))
-			} else {
-				logHandler.Log(logHandler.INFO, fmt.Sprintf("block %s storing was unsuccessfully", blockInstance.Hash))
+			blockRepo.CreateBlock(blockInstance)
+			for _, trx := range trxList {
+				trxInstance := domain.Transaction{
+					Hash:        trx.Hash,
+					BlockNumber: int64(trx.BlockNumber),
+					From:        trx.From,
+					To:          trx.To,
+					Amount:      int64(trx.Amount),
+					Nonce:       int64(trx.Nonce),
+				}
+				transactionRepo.CreateTransaction(trxInstance)
 			}
-
-			// create new payload => { number, hash, txCount }
-			// store in db
-			// sleep 2 sec
 		}
 	}
 	logHandler.Log(logHandler.INFO, "End of background process")
