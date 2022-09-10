@@ -8,22 +8,30 @@ import (
 )
 
 func NewBlockService(blockRepo *repository.BlockRepository, proto_service proto_service.UnimplementedBlockServiceServer) proto_service.BlockServiceServer {
-	// return &BlockService{
-	// 	protobuf_service: proto_service,
-	// 	blockRepo:        blockRepo,
-	// }
 	return &BlockService{}
 }
 
 type BlockService struct {
 	proto_service.UnimplementedBlockServiceServer
-	// blockRepo        *repository.BlockRepository
 }
 
-func (blockSrv *BlockService) StoreBlockation(ctx context.Context, input *proto_service.BlockRequest) (*proto_service.BlockResponse, error) {
-	return &proto_service.BlockResponse{}, nil
-}
-
-func (blockSrv *BlockService) Estimate(ctx context.Context, input *proto_service.BlockRequest) (*proto_service.EstimateResponse, error) {
-	return &proto_service.EstimateResponse{}, nil
+func (blockSrv *BlockService) GetBlock(ctx context.Context, blockNumber *proto_service.BlockRequest) (*proto_service.BlockResponse, error) {
+	return &proto_service.BlockResponse{
+		Success: true,
+		Block: &proto_service.Block{
+			Number:  blockNumber.BlockNumber,
+			Hash:    "934y34ty85",
+			TxCount: 14,
+			Transactions: []*proto_service.Transaction{
+				{
+					BlockNumber: blockNumber.BlockNumber,
+					Hash:        "ohisi99yf8732f48gb5yby7f",
+					Amount:      121550000,
+					Nonce:       0,
+					From:        "0xigr4y58hg8gh84h5h5",
+					To:          "0xmopqj2nfh28hr4",
+				},
+			},
+		},
+	}, nil
 }

@@ -27,9 +27,9 @@ func SyncNetwork(cfg config.Config, blockRepo *repository.BlockRepository, trans
 		logHandler.Log(logHandler.INFO, fmt.Sprintf("latest block %d", blockState))
 
 		//
-		// Get 5 block of a network
+		// Get "cfg.Server.NumberOfBlockForCapturing" last blocks of network
 		//
-		for index := currentBlockNumber; index > currentBlockNumber-2; index-- {
+		for index := currentBlockNumber; index > currentBlockNumber-cfg.Server.NumberOfBlockForCapturing; index-- {
 			time.Sleep(5 * time.Second)
 			// logHandler.Log(logHandler.INFO, fmt.Sprintf("block state %d", blockState))
 			blockState = index
@@ -41,6 +41,7 @@ func SyncNetwork(cfg config.Config, blockRepo *repository.BlockRepository, trans
 				Hash:    block.Hash,
 				Number:  int64(block.Number),
 			}
+			// Store blocks data
 			blockRepo.CreateBlock(blockInstance)
 			for _, trx := range trxList {
 				trxInstance := domain.Transaction{
@@ -51,6 +52,7 @@ func SyncNetwork(cfg config.Config, blockRepo *repository.BlockRepository, trans
 					Amount:      int64(trx.Amount),
 					Nonce:       int64(trx.Nonce),
 				}
+				// Store transactions
 				transactionRepo.CreateTransaction(trxInstance)
 			}
 		}

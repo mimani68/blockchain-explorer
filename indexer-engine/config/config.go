@@ -26,7 +26,10 @@ type Config struct {
 		ServerPort      string `mapstructure:"port"`
 		Prefix          string `mapstructure:"prefix"`
 		CronJobInterval int    `mapstructure:"cron_job_interval"`
-		NetworkTitle    string `mapstructure:"network"`
+
+		NetworkTitle              string `mapstructure:"network"`
+		NumberOfBlockForCapturing int    `mapstructure:"number_of_block_for_capturing"`
+		TatumApiToken             string `mapstructure:"tatum_api_token"`
 
 		AuthenticationPlugin string `mapstructure:"authentication_plugin"`
 
@@ -34,8 +37,6 @@ type Config struct {
 		KeepAlive    time.Duration `mapstructure:"keepAlive"`
 		ReadTimeout  time.Duration `mapstructure:"readTimeout"`
 		WriteTimeout time.Duration `mapstructure:"writeTimeout"`
-
-		TatumApiToken string `mapstructure:"tatum_api_token"`
 
 		EnabledListeners []string      `mapstructure:"enabledListeners"`
 		CleanupTimeout   time.Duration `mapstructure:"cleanupTimeout"`

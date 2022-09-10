@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+import public "service/block.proto";
+import public "service/transaction.proto";
+
+option go_package = "service/";
+
+package proto;
