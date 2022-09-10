@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"app.io/internal/data/domain"
 	proto_service "app.io/internal/transport/grpc/proto_service"
 )
 
@@ -15,19 +16,29 @@ type TransactionService struct {
 }
 
 func (blockSrv *TransactionService) GetTransaction(ctx context.Context, request *proto_service.TransactionRequest) (*proto_service.TransactionResponse, error) {
-	if len(request.TransactionHash) <= 0 {
-		// get last transaction of db
-		request.TransactionHash = "0x7fg376t65f"
+	var transaction *domain.Transaction
+	var err error
+	if request.TransactionHash == "" {
+		transaction, err = trxRepo.GetLastTransaction()
+	} else {
+		transaction, err = trxRepo.GetTransactionByHash(request.TransactionHash)
 	}
+	if err != nil || transaction.Hash == "" {
+		return &proto_service.TransactionResponse{
+			Success: false,
+			Message: "Unable to get transaction",
+		}, nil
+	}
+
 	return &proto_service.TransactionResponse{
 		Success: true,
 		Transaction: &proto_service.Transaction{
-			BlockNumber: 2135451,
-			Hash:        "0x7fg376t65f",
-			Amount:      1,
-			Nonce:       4,
-			From:        "0xyyyyy",
-			To:          "0xerg45jg945t",
+			BlockNumber: transaction.BlockNumber,
+			Hash:        transaction.Hash,
+			Amount:      transaction.Amount,
+			Nonce:       transaction.Nonce,
+			From:        transaction.From,
+			To:          transaction.To,
 		},
 	}, nil
 }

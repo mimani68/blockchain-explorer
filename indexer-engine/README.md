@@ -58,3 +58,9 @@ grpcurl -plaintext localhost:3000 io.app.price.api.StatsService/Stat
 ```bash
 grpcurl -plaintext -d '{"startBlock": 5000000, "endBlock": 15000000000}' localhost:3000 io.app.price.api.StatsService/Stat
 ```
+
+### Get last transaction
+
+```bash
+grpcurl -plaintext localhost:3000 io.app.price.api.TransactionService/GetTransaction
+```

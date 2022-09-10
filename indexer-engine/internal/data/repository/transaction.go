@@ -21,7 +21,7 @@ func CreateTransactionRepository(cfg config.Config, db gorm.DB) *TransactionRepo
 
 func (r *TransactionRepository) GetTransactions(skip int64, limit int64, status string) ([]domain.Transaction, error) {
 	var transactions []domain.Transaction
-	result := r.db.Model(&domain.Transaction{}).Find(&transactions, "status = ?", status).Limit(int(limit)).Offset(int(skip)).Distinct()
+	result := r.db.Model(&domain.Transaction{}).Find(&transactions, "status = ?", status).Limit(int(limit)).Offset(int(skip)).Distinct().Order("block_number")
 	if result.Error != nil {
 		return nil, errors.New("transaction list is empty")
 	}
@@ -42,6 +42,15 @@ func (r *TransactionRepository) GetTransactionById(id string) (*domain.Transacti
 	return result, nil
 }
 
+func (r *TransactionRepository) GetLastTransaction() (*domain.Transaction, error) {
+	var transaction domain.Transaction
+	result := r.db.Model(&domain.Transaction{}).Limit(1).Distinct().Order("block_number").Order("created_at").Scan(&transaction)
+	if result.Error != nil {
+		return nil, errors.New("transaction list is empty")
+	}
+	return &transaction, nil
+}
+
 func (r *TransactionRepository) GetTransactionsByBlockNumber(blockNumber int) ([]domain.Transaction, error) {
 	var transactions []domain.Transaction
 	result := r.db.Model(&domain.Transaction{}).Find(&transactions, "block_number = ?", blockNumber).Distinct()
@@ -49,6 +58,15 @@ func (r *TransactionRepository) GetTransactionsByBlockNumber(blockNumber int) ([
 		return nil, errors.New("transaction list is empty")
 	}
 	return transactions, nil
+}
+
+func (r *TransactionRepository) GetTransactionByHash(blockHash string) (*domain.Transaction, error) {
+	var transaction domain.Transaction
+	result := r.db.Model(&domain.Transaction{}).Where("hash == ?", blockHash).Limit(1).Distinct().Order("block_number").Order("created_at").Scan(&transaction)
+	if result.Error != nil {
+		return nil, errors.New("transaction list is empty")
+	}
+	return &transaction, nil
 }
 
 func (r *TransactionRepository) GetTransactionsSum(startBlockNumber int, endBlockNumber int) (int, error) {
