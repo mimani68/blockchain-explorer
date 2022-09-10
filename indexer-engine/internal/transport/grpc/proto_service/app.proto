@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package io.app.price.api;
+
+import "internal/transport/grpc/proto_service/block.proto";
+import "internal/transport/grpc/proto_service/transaction.proto";
+
+option go_package = "service/";
+
+service TransactionService {
+  rpc GetTransaction(TransactionRequest) returns (TransactionResponse) {}
+}
+
+service BlockService {
+  rpc GetBlock(BlockRequest) returns (BlockResponse) {}
+}
+

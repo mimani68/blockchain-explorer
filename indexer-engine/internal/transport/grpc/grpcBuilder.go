@@ -12,6 +12,7 @@ import (
 	"app.io/internal/transport/grpc/service"
 	"app.io/pkg/logHandler"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func grpcServerBuilder(listener net.Listener, cfg config.Config, blockRepo *repository.BlockRepository, transactionRepo *repository.TransactionRepository) {
@@ -20,6 +21,7 @@ func grpcServerBuilder(listener net.Listener, cfg config.Config, blockRepo *repo
 
 	blockService := service.NewBlockService(blockRepo, proto_service.UnimplementedBlockServiceServer{})
 	proto_service.RegisterBlockServiceServer(grpcServer, blockService)
+	reflection.Register(grpcServer)
 
 	go func() {
 		if err := grpcServer.Serve(listener); err != nil {

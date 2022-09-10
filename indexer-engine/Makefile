@@ -35,7 +35,7 @@ grpc_builder:
 		--go-grpc_out=. \
 		--go-grpc_opt=paths=source_relative \
 		--swagger_out=logtostderr=true:. \
-		internal/transport/grpc/proto_service/service.proto
+		internal/transport/grpc/proto_service/*.proto
 	@echo done
 
 gosec:
@@ -48,6 +48,9 @@ run_root:
 
 run_grpc:
 	@go run init/main.go grpc --port 3000 --host 0.0.0.0 --env development
+
+mannual_grpc_test:
+	@grpcurl -d '{"blockNumber":1}' -plaintext localhost:3000 io.app.price.api.BlockService/GetBlock
 
 build-mocks:
 	@go get github.com/golang/mock/gomock

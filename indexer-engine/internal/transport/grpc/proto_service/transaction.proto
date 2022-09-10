@@ -1,12 +1,8 @@
 syntax = "proto3";
 
+package io.app.price.api;
+
 option go_package = "service/";
-
-package proto;
-
-service TransactionService {
-  rpc GetTransaction(TransactionRequest) returns (TransactionResponse) {}
-}
 
 message TransactionResponse {
   bool success = 1;

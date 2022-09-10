@@ -9,7 +9,7 @@ server:
   env: development
   host: "0.0.0.0"
   port: 3000
-  cron_job_interval: 60
+  cron_job_interval: 500000
   network: ethereum
   number_of_block_for_capturing: 5
   authentication_plugin: keyclock
