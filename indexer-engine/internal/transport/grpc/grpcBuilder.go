@@ -34,9 +34,9 @@ func grpcServerBuilder(listener net.Listener, cfg config.Config, db db.Database)
 	c := make(chan os.Signal)
 	signal.Notify(c, os.Interrupt)
 	<-c
-	fmt.Println("\nStopping the server... ")
+	logHandler.Log(logHandler.INFO, "Stopping the server...")
 	grpcServer.Stop()
 	listener.Close()
-	fmt.Println("Closing database conncetion")
-	fmt.Println("Done")
+	logHandler.Log(logHandler.INFO, "Closing database conncetion")
+	logHandler.Log(logHandler.INFO, "Shutdown application")
 }

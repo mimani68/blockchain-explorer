@@ -26,7 +26,7 @@ func RunServer() {
 	}
 
 	dbInstance := db.NewDatabase(*cfg)
-	dbInstance.Db.AutoMigrate()
+	dbInstance.AutoMigrate()
 
 	//
 	// Capture network data in background

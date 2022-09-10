@@ -9,5 +9,5 @@ type Block struct {
 }
 
 func (Block) TableName() string {
-	return "block"
+	return "app.block"
 }

@@ -5,10 +5,12 @@ import (
 	"time"
 
 	"app.io/config"
+	"app.io/internal/data/db"
+	"app.io/pkg/logHandler"
 	tatumNetworkExporlorer "app.io/pkg/tatum"
 )
 
-func SyncNetwork(cfg config.Config) {
+func SyncNetwork(cfg config.Config, db db.Database) {
 
 	blockState := 0
 	networkList := []string{cfg.Server.NetworkTitle}
@@ -21,18 +23,18 @@ func SyncNetwork(cfg config.Config) {
 			return
 		}
 		blockState = currentBlockNumber
-		fmt.Printf("latest block %d \n", blockState)
+		logHandler.Log(logHandler.INFO, fmt.Sprintf("latest block %d \n", blockState))
 
 		//
 		// Get 5 block of a network
 		//
 		for index := currentBlockNumber; index > currentBlockNumber-2; index-- {
 			time.Sleep(5 * time.Second)
-			fmt.Printf("block state %d \n", blockState)
+			logHandler.Log(logHandler.INFO, fmt.Sprintf("block state %d \n", blockState))
 			blockState = index
 			block, trxList := tatumNetworkExporlorer.GetBlockData(network, blockState, cfg.Server.TatumApiToken)
-			fmt.Printf("block %v \n", block)
-			fmt.Printf("trx list %v \n", trxList)
+			logHandler.Log(logHandler.INFO, fmt.Sprintf("block %v \n", block))
+			logHandler.Log(logHandler.INFO, fmt.Sprintf("trx list %v \n", trxList))
 			// create new payload => { number, hash, txCount }
 			// store in db
 			// sleep 2 sec
