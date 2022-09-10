@@ -2,7 +2,6 @@ package repository
 
 import (
 	"errors"
-	"strings"
 	"time"
 
 	"app.io/config"
@@ -22,10 +21,7 @@ func CreateBlockRepository(cfg config.Config, db gorm.DB) *BlockRepository {
 
 func (r *BlockRepository) GetBlocks(skip int64, limit int64, status string) ([]domain.Block, error) {
 	var blocks []domain.Block
-	status = strings.ToUpper(status)
-	// result := r.db.Find(&blocks, "status = ?", status).Omit("vcode").Limit(int(limit)).Offset(int(skip))
-	// r.db.Model(&domain.Block{}).Select("*").Joins("left join app.application on application.id = blocks.app").Scan(&blocks)
-	result := r.db.Model(&domain.Block{}).Preload("App").Find(&blocks, "status = ?", status).Omit("vcode").Limit(int(limit)).Offset(int(skip))
+	result := r.db.Model(&domain.Block{}).Find(&blocks, "status = ?", status).Limit(int(limit)).Offset(int(skip))
 	if result.Error != nil {
 		return nil, errors.New("block list is empty")
 	}
@@ -39,7 +35,7 @@ func (r *BlockRepository) GetBlockById(id string) (*domain.Block, error) {
 			ID: id,
 		},
 	}
-	r.db.First(result, query).Omit("password")
+	r.db.First(result, query)
 	if result.ID == "" {
 		return nil, errors.New("such block dose not exits")
 	}
@@ -52,7 +48,6 @@ func (r *BlockRepository) CreateBlock(data domain.Block) (*domain.Block, error) 
 			ID:        uuid.New().String(),
 			CreatedAt: time.Now(),
 			UpdatedAt: nil,
-			DeletedAt: nil,
 		},
 		Hash:    data.Hash,
 		Number:  data.Number,
@@ -72,12 +67,7 @@ func (r *BlockRepository) UpdateBlock(id string, updatedBlock domain.Block) (*do
 		}}
 	// exclude
 	updatedBlock.ID = ""
-	// updatedBlock.Role = ""
-	updatedBlock.Status = ""
-	// updatedBlock.CreatedAt = ""
-	// updatedBlock.DeletedAt = ""
-	// updatedBlock.UpdatedAt = ""
-	dbTrxOperation := r.db.Model(&block).Preload("App").Omit("vcode").Updates(updatedBlock).Scan(&block)
+	dbTrxOperation := r.db.Model(&block).Updates(updatedBlock).Scan(&block)
 	if dbTrxOperation.Error != nil {
 		return nil, errors.New("block didn't updated")
 	}
@@ -89,7 +79,7 @@ func (r *BlockRepository) SoftDeleteBlock(id string) (*domain.Block, error) {
 		Base: domain.Base{
 			ID: id,
 		}}
-	dbTrxOperation := r.db.Model(&block).Preload("App").Omit("vcode").Updates(
+	dbTrxOperation := r.db.Model(&block).Updates(
 		map[string]interface{}{
 			"deletedAt": time.Now().Format(time.RFC3339),
 		},
@@ -105,7 +95,7 @@ func (r *BlockRepository) DeleteBlock(id string) (*domain.Block, error) {
 		Base: domain.Base{
 			ID: id,
 		}}
-	dbTrxOperation := r.db.Delete(block).Preload("App").Omit("vcode").Scan(&block)
+	dbTrxOperation := r.db.Delete(block).Scan(&block)
 	if dbTrxOperation.Error != nil {
 		return nil, errors.New("block didn't delete")
 	}

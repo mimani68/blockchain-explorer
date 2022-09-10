@@ -6,12 +6,13 @@ import (
 
 	"app.io/config"
 	"app.io/internal/data/db"
+	"app.io/internal/data/domain"
 	"app.io/pkg/logHandler"
 	tatumNetworkExporlorer "app.io/pkg/tatum"
 )
 
 func SyncNetwork(cfg config.Config, db db.Database) {
-
+	logHandler.Log(logHandler.INFO, "Start background process")
 	blockState := 0
 	networkList := []string{cfg.Server.NetworkTitle}
 	for _, network := range networkList {
@@ -23,21 +24,35 @@ func SyncNetwork(cfg config.Config, db db.Database) {
 			return
 		}
 		blockState = currentBlockNumber
-		logHandler.Log(logHandler.INFO, fmt.Sprintf("latest block %d \n", blockState))
+		logHandler.Log(logHandler.INFO, fmt.Sprintf("latest block %d", blockState))
 
 		//
 		// Get 5 block of a network
 		//
 		for index := currentBlockNumber; index > currentBlockNumber-2; index-- {
 			time.Sleep(5 * time.Second)
-			logHandler.Log(logHandler.INFO, fmt.Sprintf("block state %d \n", blockState))
+			// logHandler.Log(logHandler.INFO, fmt.Sprintf("block state %d", blockState))
 			blockState = index
 			block, trxList := tatumNetworkExporlorer.GetBlockData(network, blockState, cfg.Server.TatumApiToken)
-			logHandler.Log(logHandler.INFO, fmt.Sprintf("block %v \n", block))
-			logHandler.Log(logHandler.INFO, fmt.Sprintf("trx list %v \n", trxList))
+			// logHandler.Log(logHandler.INFO, fmt.Sprintf("block %v", block))
+			// logHandler.Log(logHandler.INFO, fmt.Sprintf("trx list %v", trxList))
+			_ = trxList
+			blockInstance := domain.Block{
+				TxCount: int64(len(trxList)),
+				Hash:    block.Hash,
+				Number:  block.Number,
+			}
+			result := db.Db.Create(&blockInstance)
+			if result.Error == nil {
+				logHandler.Log(logHandler.INFO, fmt.Sprintf("block %s storing was successfully", blockInstance.Hash))
+			} else {
+				logHandler.Log(logHandler.INFO, fmt.Sprintf("block %s storing was unsuccessfully", blockInstance.Hash))
+			}
+
 			// create new payload => { number, hash, txCount }
 			// store in db
 			// sleep 2 sec
 		}
 	}
+	logHandler.Log(logHandler.INFO, "End of background process")
 }

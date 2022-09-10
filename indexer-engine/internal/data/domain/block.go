@@ -3,11 +3,11 @@ package domain
 // swagger:model Block
 type Block struct {
 	Base
-	Number  string `json:"number,omitempty"`
+	Number  int64  `json:"number,omitempty" gorm:"primaryKey"`
 	Hash    string `json:"hash,omitempty"`
-	TxCount string `json:"tx_count,omitempty"`
+	TxCount int64  `json:"tx_count,omitempty"`
 }
 
 func (Block) TableName() string {
-	return "app.block"
+	return "block"
 }
