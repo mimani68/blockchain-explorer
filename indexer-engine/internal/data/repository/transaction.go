@@ -51,6 +51,24 @@ func (r *TransactionRepository) GetTransactionsByBlockNumber(blockNumber int) ([
 	return transactions, nil
 }
 
+func (r *TransactionRepository) GetTransactionsSum(startBlockNumber int, endBlockNumber int) (int, error) {
+	var trxStats int
+	result := r.db.Table("transaction").Select("sum(amount) as result").Where("block_number BETWEEN ? AND ? ", startBlockNumber, endBlockNumber).Distinct().Scan(&trxStats)
+	if result.Error != nil {
+		return 0, errors.New("transaction stats return invalid value")
+	}
+	return trxStats, nil
+}
+
+func (r *TransactionRepository) GetTransactionsNumber(startBlockNumber int, endBlockNumber int) (int, error) {
+	var trxStats int
+	result := r.db.Table("transaction").Select("count(amount) as result").Where("block_number BETWEEN ? AND ? ", startBlockNumber, endBlockNumber).Distinct().Scan(&trxStats)
+	if result.Error != nil {
+		return 0, errors.New("transaction stats return invalid value")
+	}
+	return trxStats, nil
+}
+
 func (r *TransactionRepository) CreateTransaction(data domain.Transaction) (*domain.Transaction, error) {
 	result := domain.Transaction{
 		Base: domain.Base{
