@@ -4,7 +4,7 @@ ARG ALPINE_TAG=3.15
 #
 # Build server
 #
-FROM golang:GOLANG_VERSION AS build
+FROM golang:$GOLANG_VERSION AS build
 
 ENV GO111MODULE=on \
     GOOS=linux \
@@ -25,7 +25,7 @@ RUN go build -o ./build/app main.go
 #
 # Serve binary file
 #
-FROM alpine:ALPINE_TAG
+FROM alpine:$ALPINE_TAG
 
 LABEL maintainer="Mahdi Imani <imani.mahdi@gmail.com>"
 

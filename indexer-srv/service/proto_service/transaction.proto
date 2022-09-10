@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package io.app.price.api;
+
+option go_package = "service/";
+
+message TransactionResponse {
+  bool success = 1;
+  string message = 2;
+  Transaction transaction = 3;
+}
+
+message TransactionRequest {
+  string transactionHash = 1;
+}
+
+message Transaction {
+  int64 blockNumber = 1;
+  string hash = 2;
+  int64 amount = 3;
+  int64 nonce = 4;
+  string From = 5;
+  string to = 6;
+}

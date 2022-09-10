@@ -1,0 +1,167 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "internal/transport/grpc/proto_service/app.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "apiBlock": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string",
+          "format": "int64"
+        },
+        "Hash": {
+          "type": "string"
+        },
+        "txCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/apiTransaction"
+          }
+        }
+      }
+    },
+    "apiBlockResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "block": {
+          "$ref": "#/definitions/apiBlock"
+        }
+      }
+    },
+    "apiScanResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "block": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/apiBlock"
+          }
+        }
+      }
+    },
+    "apiStats": {
+      "type": "object",
+      "properties": {
+        "totalAmount": {
+          "type": "string"
+        },
+        "totalTransactions": {
+          "type": "string"
+        }
+      }
+    },
+    "apiStatsResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "stats": {
+          "$ref": "#/definitions/apiStats"
+        }
+      }
+    },
+    "apiTransaction": {
+      "type": "object",
+      "properties": {
+        "blockNumber": {
+          "type": "string",
+          "format": "int64"
+        },
+        "hash": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "nonce": {
+          "type": "string",
+          "format": "int64"
+        },
+        "From": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        }
+      }
+    },
+    "apiTransactionResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "transaction": {
+          "$ref": "#/definitions/apiTransaction"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

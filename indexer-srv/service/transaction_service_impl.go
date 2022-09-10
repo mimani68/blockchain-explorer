@@ -1,22 +1,29 @@
 package service
 
 import (
+	"context"
+
 	"app.io/data/model"
-	"app.io/pkg/validation"
+	pb "app.io/service/proto_service"
 )
 
-func NewTransactionService(transactionGrpcClient interface{}) TransactionService {
+func NewTransactionService(transactionGrpcClient pb.BlockServiceClient, ctx context.Context) TransactionService {
 	return &transactionServiceImpl{
+		ctx:                   ctx,
 		transactionGrpcClient: transactionGrpcClient,
 	}
 }
 
 type transactionServiceImpl struct {
-	transactionGrpcClient interface{}
+	ctx                   context.Context
+	transactionGrpcClient pb.BlockServiceClient
 }
 
-func (service *transactionServiceImpl) Create(request model.CreateTransactionRequest) (response model.CreateTransactionResponse) {
-	validation.Validate(request)
+func (service *transactionServiceImpl) Single(request model.CreateTransactionRequest) (response model.CreateTransactionResponse) {
+	// validation.Validate(request)
+	service.transactionGrpcClient.GetBlock(service.ctx, &pb.BlockRequest{
+		BlockNumber: 124454,
+	})
 
 	response = model.CreateTransactionResponse{
 		Id:       "1",
