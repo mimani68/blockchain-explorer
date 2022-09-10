@@ -9,7 +9,7 @@ server:
   env: development
   host: "0.0.0.0"
   port: 3000
-  prefix: '/api'
-  cron_job_interval: 60
+  cron_job_interval: 10
+  network: ethereum
   authentication_plugin: keyclock
   tatum_api_token: b211febc-6e35-4430-959d-9ae103799f4b

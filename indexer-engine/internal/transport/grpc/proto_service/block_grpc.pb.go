@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.19.4
-// source: internal/transport/grpc/service/block.proto
+// source: internal/transport/grpc/proto_service/block.proto
 
 package proto
 
@@ -23,7 +23,6 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BlockServiceClient interface {
 	StoreBlockation(ctx context.Context, in *BlockRequest, opts ...grpc.CallOption) (*BlockResponse, error)
-	ShowBlockInBlock(ctx context.Context, in *BlockRequest, opts ...grpc.CallOption) (*BlockResponse, error)
 	Estimate(ctx context.Context, in *BlockRequest, opts ...grpc.CallOption) (*EstimateResponse, error)
 }
 
@@ -44,15 +43,6 @@ func (c *blockServiceClient) StoreBlockation(ctx context.Context, in *BlockReque
 	return out, nil
 }
 
-func (c *blockServiceClient) ShowBlockInBlock(ctx context.Context, in *BlockRequest, opts ...grpc.CallOption) (*BlockResponse, error) {
-	out := new(BlockResponse)
-	err := c.cc.Invoke(ctx, "/proto.BlockService/ShowBlockInBlock", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *blockServiceClient) Estimate(ctx context.Context, in *BlockRequest, opts ...grpc.CallOption) (*EstimateResponse, error) {
 	out := new(EstimateResponse)
 	err := c.cc.Invoke(ctx, "/proto.BlockService/Estimate", in, out, opts...)
@@ -67,7 +57,6 @@ func (c *blockServiceClient) Estimate(ctx context.Context, in *BlockRequest, opt
 // for forward compatibility
 type BlockServiceServer interface {
 	StoreBlockation(context.Context, *BlockRequest) (*BlockResponse, error)
-	ShowBlockInBlock(context.Context, *BlockRequest) (*BlockResponse, error)
 	Estimate(context.Context, *BlockRequest) (*EstimateResponse, error)
 }
 
@@ -77,9 +66,6 @@ type UnimplementedBlockServiceServer struct {
 
 func (UnimplementedBlockServiceServer) StoreBlockation(context.Context, *BlockRequest) (*BlockResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StoreBlockation not implemented")
-}
-func (UnimplementedBlockServiceServer) ShowBlockInBlock(context.Context, *BlockRequest) (*BlockResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ShowBlockInBlock not implemented")
 }
 func (UnimplementedBlockServiceServer) Estimate(context.Context, *BlockRequest) (*EstimateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Estimate not implemented")
@@ -115,24 +101,6 @@ func _BlockService_StoreBlockation_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BlockService_ShowBlockInBlock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BlockRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BlockServiceServer).ShowBlockInBlock(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/proto.BlockService/ShowBlockInBlock",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BlockServiceServer).ShowBlockInBlock(ctx, req.(*BlockRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _BlockService_Estimate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BlockRequest)
 	if err := dec(in); err != nil {
@@ -163,14 +131,10 @@ var BlockService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BlockService_StoreBlockation_Handler,
 		},
 		{
-			MethodName: "ShowBlockInBlock",
-			Handler:    _BlockService_ShowBlockInBlock_Handler,
-		},
-		{
 			MethodName: "Estimate",
 			Handler:    _BlockService_Estimate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "internal/transport/grpc/service/block.proto",
+	Metadata: "internal/transport/grpc/proto_service/block.proto",
 }

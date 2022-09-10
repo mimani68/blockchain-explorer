@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "internal/transport/grpc/service/block.proto",
+    "title": "internal/transport/grpc/proto_service/block.proto",
     "version": "version not set"
   },
   "consumes": [

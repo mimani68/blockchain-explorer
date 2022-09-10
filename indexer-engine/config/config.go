@@ -15,18 +15,18 @@ import (
 
 type Config struct {
 	Database struct {
-		Type     string `mapstructure:"type"`
-		DbUri    string `mapstructure:"uri"`
-		DbName   string `mapstructure:"name"`
-		CollUser string `mapstructure:"collection_user"`
+		Type   string `mapstructure:"type"`
+		DbUri  string `mapstructure:"uri"`
+		DbName string `mapstructure:"name"`
 	} `mapstructure:"database"`
 
 	Server struct {
-		Env         string `mapstructure:"env"`
-		ServerHost  string `mapstructure:"host"`
-		ServerPort  string `mapstructure:"port"`
-		Prefix      string `mapstructure:"prefix"`
-		CronJobTime int    `mapstructure:"cron_job_interval"`
+		Env             string `mapstructure:"env"`
+		ServerHost      string `mapstructure:"host"`
+		ServerPort      string `mapstructure:"port"`
+		Prefix          string `mapstructure:"prefix"`
+		CronJobInterval int    `mapstructure:"cron_job_interval"`
+		NetworkTitle    string `mapstructure:"network"`
 
 		AuthenticationPlugin string `mapstructure:"authentication_plugin"`
 
@@ -41,8 +41,6 @@ type Config struct {
 		CleanupTimeout   time.Duration `mapstructure:"cleanupTimeout"`
 		GracefulTimeout  time.Duration `mapstructure:"gracefulTimeout"`
 		MaxHeaderSize    int           `mapstructure:"maxHeaderSize"`
-
-		SocketPath string `mapstructure:"socketPath"`
 
 		TlsHost           string        `mapstructure:"tlsHost"`
 		TlsPort           int           `mapstructure:"tlsPort"`
@@ -64,7 +62,7 @@ func NewConfig() *Config {
 	viper.AddConfigPath("config")
 	err := viper.ReadInConfig()
 	if err != nil {
-		logHandler.Log(logHandler.ERROR, fmt.Sprintf("Fatal error config file: %w \n", err))
+		logHandler.Log(logHandler.ERROR, fmt.Sprintf("Fatal error config file: %v \n", err))
 		os.Exit(1)
 	}
 

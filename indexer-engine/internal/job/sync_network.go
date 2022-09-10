@@ -10,13 +10,8 @@ import (
 
 func SyncNetwork(cfg config.Config) {
 
-	// blockRespoitory{}
-	// TtransctionRepostioy{}
-
-	// networkList := []string{"bitcoin", "ethereum", "xrp", "ltc"}
 	blockState := 0
-	networkList := []string{"ethereum"}
-	// networkList := []string{"bitcoin"}
+	networkList := []string{cfg.Server.NetworkTitle}
 	for _, network := range networkList {
 		//
 		// Current block number
