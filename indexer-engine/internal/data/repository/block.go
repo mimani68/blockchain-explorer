@@ -42,6 +42,27 @@ func (r *BlockRepository) GetBlockById(id string) (*domain.Block, error) {
 	return result, nil
 }
 
+func (r *BlockRepository) GetBlockByNumber(number int) (*domain.Block, error) {
+	result := &domain.Block{}
+	query := domain.Block{
+		Number: int64(number),
+	}
+	r.db.First(result, query)
+	if result.ID == "" {
+		return nil, errors.New("such block dose not exits")
+	}
+	return result, nil
+}
+
+func (r *BlockRepository) GetLastBlock() (*domain.Block, error) {
+	var block domain.Block
+	result := r.db.Model(&domain.Block{}).Order("number").Limit(1).Distinct().Scan(&block)
+	if result.Error != nil {
+		return nil, errors.New("block list is empty")
+	}
+	return &block, nil
+}
+
 func (r *BlockRepository) CreateBlock(data domain.Block) (*domain.Block, error) {
 	result := domain.Block{
 		Base: domain.Base{

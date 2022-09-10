@@ -19,14 +19,14 @@ func GrpcServerBuilder(listener net.Listener, cfg config.Config, status chan str
 	serverOptions := []grpc.ServerOption{}
 	grpcServer := grpc.NewServer(serverOptions...)
 
-	blockService := service.NewBlockService(blockRepo, proto_service.UnimplementedBlockServiceServer{})
+	scanService := service.NewScanService(cfg, blockRepo, transactionRepo, proto_service.UnimplementedScanServiceServer{})
+	proto_service.RegisterScanServiceServer(grpcServer, scanService)
+	blockService := service.NewBlockService(proto_service.UnimplementedBlockServiceServer{})
 	proto_service.RegisterBlockServiceServer(grpcServer, blockService)
 	statService := service.NewStatsService(proto_service.UnimplementedStatsServiceServer{})
 	proto_service.RegisterStatsServiceServer(grpcServer, statService)
 	trxService := service.NewTransactionService(proto_service.UnimplementedTransactionServiceServer{})
 	proto_service.RegisterTransactionServiceServer(grpcServer, trxService)
-	scanService := service.NewScanService(cfg, blockRepo, transactionRepo, proto_service.UnimplementedScanServiceServer{})
-	proto_service.RegisterScanServiceServer(grpcServer, scanService)
 	reflection.Register(grpcServer)
 
 	go func() {

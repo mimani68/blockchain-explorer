@@ -34,4 +34,15 @@ docker run \
   app:1.0.0
 ```
 
-> https://github.com/grpc/grpc-go/blob/master/examples/helloworld/
+## Usage
+
+### last block data
+
+```bash
+grpcurl -plaintext localhost:3000 io.app.price.api.BlockService/GetBlock
+```
+
+### Specific block
+```bash
+grpcurl -plaintext -d '{"blockNumber":15509900}' localhost:3000 io.app.price.api.BlockService/GetBlock
+````

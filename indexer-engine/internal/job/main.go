@@ -11,7 +11,6 @@ import (
 
 func BackgroundProcesses(cfg config.Config, blockRepo *repository.BlockRepository, transactionRepo *repository.TransactionRepository) {
 	s := gocron.NewScheduler(time.Local)
-	blocState := make(chan int)
-	s.Every(cfg.Server.CronJobInterval).Seconds().Do(networkscaning.SyncNetwork, cfg, blocState, blockRepo, transactionRepo)
+	s.Every(cfg.Server.CronJobInterval).Seconds().Do(networkscaning.SyncBlocks, 0, 0, cfg, blockRepo, transactionRepo)
 	s.StartAsync()
 }

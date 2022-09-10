@@ -8,7 +8,7 @@ import (
 	"app.io/internal/data/repository"
 )
 
-func TestSyncNetwork(t *testing.T) {
+func TestSyncBlocks(t *testing.T) {
 
 	cfg := config.Config{}
 	cfg.Database.DbUri = "tcp://localhost:9001?database=app"
@@ -17,17 +17,14 @@ func TestSyncNetwork(t *testing.T) {
 	cfg.Server.NetworkTitle = "ethereum"
 	cfg.Server.NumberOfBlockForCapturing = 2
 
-	blocStateChannel := make(chan int)
 	dbInstance := db.NewDatabase(cfg)
 
 	blockRepo := repository.CreateBlockRepository(cfg, *dbInstance.Db)
 	transactionRepo := repository.CreateTransactionRepository(cfg, *dbInstance.Db)
 
-	go SyncNetwork(cfg, blocStateChannel, blockRepo, transactionRepo)
-	lastBlock := <-blocStateChannel
-	t.Logf("Last block value was %d", lastBlock)
+	blockList, err := SyncBlocks(0, 0, cfg, blockRepo, transactionRepo)
 
-	if lastBlock < 1 {
+	if len(blockList) <= 0 || err != nil {
 		t.Errorf("Having issue here")
 	}
 }

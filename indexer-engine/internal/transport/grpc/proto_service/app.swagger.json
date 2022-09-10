@@ -58,7 +58,10 @@
           "type": "string"
         },
         "block": {
-          "$ref": "#/definitions/apiBlock"
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/apiBlock"
+          }
         }
       }
     },

@@ -21,7 +21,7 @@ func CreateTransactionRepository(cfg config.Config, db gorm.DB) *TransactionRepo
 
 func (r *TransactionRepository) GetTransactions(skip int64, limit int64, status string) ([]domain.Transaction, error) {
 	var transactions []domain.Transaction
-	result := r.db.Model(&domain.Transaction{}).Find(&transactions, "status = ?", status).Limit(int(limit)).Offset(int(skip))
+	result := r.db.Model(&domain.Transaction{}).Find(&transactions, "status = ?", status).Limit(int(limit)).Offset(int(skip)).Distinct()
 	if result.Error != nil {
 		return nil, errors.New("transaction list is empty")
 	}
@@ -40,6 +40,15 @@ func (r *TransactionRepository) GetTransactionById(id string) (*domain.Transacti
 		return nil, errors.New("such transaction dose not exits")
 	}
 	return result, nil
+}
+
+func (r *TransactionRepository) GetTransactionsByBlockNumber(blockNumber int) ([]domain.Transaction, error) {
+	var transactions []domain.Transaction
+	result := r.db.Model(&domain.Transaction{}).Find(&transactions, "block_number = ?", blockNumber).Distinct()
+	if result.Error != nil {
+		return nil, errors.New("transaction list is empty")
+	}
+	return transactions, nil
 }
 
 func (r *TransactionRepository) CreateTransaction(data domain.Transaction) (*domain.Transaction, error) {

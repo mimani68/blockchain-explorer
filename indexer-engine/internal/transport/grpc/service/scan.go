@@ -26,13 +26,13 @@ type ScanService struct {
 
 func (blockSrv *ScanService) FreshScan(ctx context.Context, request *proto_service.ScanRequest) (*proto_service.ScanResponse, error) {
 	if request.StartBlock <= 0 {
-		request.StartBlock = 100
+		request.StartBlock = 0
 	}
 	if request.EndBlock <= 0 {
-		request.EndBlock = 200
+		request.EndBlock = 0
 	}
 
-	blockList, err := networkscaning.SyncNetwork(cfg, nil, blockRepo, trxRepo)
+	blockList, err := networkscaning.SyncBlocks(int(request.StartBlock), int(request.EndBlock), cfg, blockRepo, trxRepo)
 	if err != nil {
 		return &proto_service.ScanResponse{
 			Success: false,
@@ -40,32 +40,28 @@ func (blockSrv *ScanService) FreshScan(ctx context.Context, request *proto_servi
 		}, nil
 	}
 
-	if len(blockList) <= 0 {
-		blockList, err = blockRepo.GetBlocks(0, 100)
-		if err != nil {
-			return &proto_service.ScanResponse{
-				Success: false,
-				Message: "Unable sync with network",
-			}, nil
-		}
-	}
-	return &proto_service.ScanResponse{
+	result := &proto_service.ScanResponse{
 		Success: true,
 		Message: "forcing fresh scan",
-		Block: &proto_service.Block{
-			Number:  request.StartBlock,
-			Hash:    "934y34ty85",
-			TxCount: 14,
-			Transactions: []*proto_service.Transaction{
-				{
-					BlockNumber: request.StartBlock,
-					Hash:        "ohisi99yf8732f48gb5yby7f",
-					Amount:      121550000,
-					Nonce:       0,
-					From:        "0xigr4y58hg8gh84h5h5",
-					To:          "0xmopqj2nfh28hr4",
-				},
-			},
-		},
-	}, nil
+	}
+	for _, block := range blockList {
+		tmp := &proto_service.Block{
+			Number:  block.Number,
+			Hash:    block.Hash,
+			TxCount: int32(block.TxCount),
+		}
+		for _, trx := range block.Transaction {
+			a := &proto_service.Transaction{
+				BlockNumber: trx.BlockNumber,
+				Hash:        trx.Hash,
+				Amount:      trx.Amount,
+				Nonce:       trx.Nonce,
+				From:        trx.From,
+				To:          trx.To,
+			}
+			tmp.Transactions = append(tmp.Transactions, a)
+		}
+		result.Block = append(result.Block, tmp)
+	}
+	return result, nil
 }
