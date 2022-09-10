@@ -19,9 +19,9 @@ func CreateBlockRepository(cfg config.Config, db gorm.DB) *BlockRepository {
 	return &BlockRepository{cfg, db}
 }
 
-func (r *BlockRepository) GetBlocks(skip int64, limit int64, status string) ([]domain.Block, error) {
+func (r *BlockRepository) GetBlocks(skip int64, limit int64) ([]domain.Block, error) {
 	var blocks []domain.Block
-	result := r.db.Model(&domain.Block{}).Find(&blocks, "status = ?", status).Limit(int(limit)).Offset(int(skip))
+	result := r.db.Model(&domain.Block{}).Limit(int(limit)).Offset(int(skip))
 	if result.Error != nil {
 		return nil, errors.New("block list is empty")
 	}
