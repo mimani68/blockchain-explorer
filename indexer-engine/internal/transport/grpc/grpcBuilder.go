@@ -25,7 +25,7 @@ func GrpcServerBuilder(listener net.Listener, cfg config.Config, status chan str
 	proto_service.RegisterStatsServiceServer(grpcServer, statService)
 	trxService := service.NewTransactionService(proto_service.UnimplementedTransactionServiceServer{})
 	proto_service.RegisterTransactionServiceServer(grpcServer, trxService)
-	scanService := service.NewScanService(proto_service.UnimplementedScanServiceServer{})
+	scanService := service.NewScanService(cfg, blockRepo, transactionRepo, proto_service.UnimplementedScanServiceServer{})
 	proto_service.RegisterScanServiceServer(grpcServer, scanService)
 	reflection.Register(grpcServer)
 

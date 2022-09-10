@@ -1,4 +1,4 @@
-package job
+package networkscaning
 
 import (
 	"fmt"
@@ -11,8 +11,9 @@ import (
 	tatumNetworkExporlorer "app.io/pkg/tatum"
 )
 
-func SyncNetwork(cfg config.Config, blockState chan int, blockRepo *repository.BlockRepository, transactionRepo *repository.TransactionRepository) {
+func SyncNetwork(cfg config.Config, blockState chan int, blockRepo *repository.BlockRepository, transactionRepo *repository.TransactionRepository) ([]domain.Block, error) {
 	logHandler.Log(logHandler.INFO, "Start background process")
+	tmpBlockList := []domain.Block{}
 	networkList := []string{cfg.Server.NetworkTitle}
 	for _, network := range networkList {
 		//
@@ -20,7 +21,7 @@ func SyncNetwork(cfg config.Config, blockState chan int, blockRepo *repository.B
 		//
 		currentBlockNumber, err := tatumNetworkExporlorer.GetCurrentBlockNumber(network, cfg.Server.TatumApiToken)
 		if err != nil {
-			return
+			return nil, err
 		}
 		blockState <- currentBlockNumber
 		logHandler.Log(logHandler.INFO, fmt.Sprintf("latest block %d", blockState))
@@ -40,6 +41,7 @@ func SyncNetwork(cfg config.Config, blockState chan int, blockRepo *repository.B
 				Hash:    block.Hash,
 				Number:  int64(block.Number),
 			}
+			tmpBlockList = append(tmpBlockList, block)
 			// Store blocks data
 			blockRepo.CreateBlock(blockInstance)
 			for _, trx := range trxList {
@@ -57,4 +59,5 @@ func SyncNetwork(cfg config.Config, blockState chan int, blockRepo *repository.B
 		}
 	}
 	logHandler.Log(logHandler.INFO, "End of background process")
+	return tmpBlockList, nil
 }

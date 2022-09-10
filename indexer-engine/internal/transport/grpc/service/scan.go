@@ -3,10 +3,20 @@ package service
 import (
 	"context"
 
+	"app.io/config"
+	"app.io/internal/data/repository"
+	networkscaning "app.io/internal/pkg/networkScaning"
 	proto_service "app.io/internal/transport/grpc/proto_service"
 )
 
-func NewScanService(proto_service.UnimplementedScanServiceServer) proto_service.ScanServiceServer {
+var cfg config.Config
+var blockRepo *repository.BlockRepository
+var trxRepo *repository.TransactionRepository
+
+func NewScanService(_cfg config.Config, _blockRepo *repository.BlockRepository, _trxRepo *repository.TransactionRepository, proto_service proto_service.UnimplementedScanServiceServer) proto_service.ScanServiceServer {
+	cfg = _cfg
+	blockRepo = _blockRepo
+	trxRepo = _trxRepo
 	return &ScanService{}
 }
 
@@ -21,9 +31,27 @@ func (blockSrv *ScanService) FreshScan(ctx context.Context, request *proto_servi
 	if request.EndBlock <= 0 {
 		request.EndBlock = 200
 	}
+
+	blockList, err := networkscaning.SyncNetwork(cfg, nil, blockRepo, trxRepo)
+	if err != nil {
+		return &proto_service.ScanResponse{
+			Success: false,
+			Message: "Unable sync with network",
+		}, nil
+	}
+
+	if len(blockList) <= 0 {
+		blockList, err = blockRepo.GetBlocks(0, 100)
+		if err != nil {
+			return &proto_service.ScanResponse{
+				Success: false,
+				Message: "Unable sync with network",
+			}, nil
+		}
+	}
 	return &proto_service.ScanResponse{
 		Success: true,
-		Message: "forceing fresh scan",
+		Message: "forcing fresh scan",
 		Block: &proto_service.Block{
 			Number:  request.StartBlock,
 			Hash:    "934y34ty85",
