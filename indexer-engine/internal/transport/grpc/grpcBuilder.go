@@ -15,7 +15,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-func grpcServerBuilder(listener net.Listener, cfg config.Config, blockRepo *repository.BlockRepository, transactionRepo *repository.TransactionRepository) {
+func GrpcServerBuilder(listener net.Listener, cfg config.Config, status chan string, blockRepo *repository.BlockRepository, transactionRepo *repository.TransactionRepository) {
 	serverOptions := []grpc.ServerOption{}
 	grpcServer := grpc.NewServer(serverOptions...)
 
@@ -27,10 +27,13 @@ func grpcServerBuilder(listener net.Listener, cfg config.Config, blockRepo *repo
 	proto_service.RegisterTransactionServiceServer(grpcServer, trxService)
 	reflection.Register(grpcServer)
 
+	// grpcServerStatus := make(chan string)
 	go func() {
+		status <- "SERVER_IS_AVAIALBE"
 		if err := grpcServer.Serve(listener); err != nil {
-			msg := fmt.Sprintf("failed to serve %v", err)
-			logHandler.Log(logHandler.INFO, msg, "GRPC")
+			logHandler.Log(logHandler.INFO, err.Error(), "GRPC")
+		} else {
+			logHandler.Log(logHandler.INFO, "gRPC server is active", "GRPC")
 		}
 	}()
 	logHandler.Log(logHandler.INFO, fmt.Sprintf("server listening at %v", listener.Addr()))

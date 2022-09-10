@@ -22,8 +22,8 @@ type Config struct {
 
 	Server struct {
 		Env             string `mapstructure:"env"`
-		ServerHost      string `mapstructure:"host"`
-		ServerPort      string `mapstructure:"port"`
+		Host            string `mapstructure:"host"`
+		Port            string `mapstructure:"port"`
 		Prefix          string `mapstructure:"prefix"`
 		CronJobInterval int    `mapstructure:"cron_job_interval"`
 

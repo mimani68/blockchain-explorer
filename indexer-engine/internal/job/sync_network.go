@@ -11,19 +11,18 @@ import (
 	tatumNetworkExporlorer "app.io/pkg/tatum"
 )
 
-func SyncNetwork(cfg config.Config, blockRepo *repository.BlockRepository, transactionRepo *repository.TransactionRepository) {
+func SyncNetwork(cfg config.Config, blockState chan int, blockRepo *repository.BlockRepository, transactionRepo *repository.TransactionRepository) {
 	logHandler.Log(logHandler.INFO, "Start background process")
-	blockState := 0
 	networkList := []string{cfg.Server.NetworkTitle}
 	for _, network := range networkList {
 		//
 		// Current block number
 		//
-		currentBlockNumber, err := tatumNetworkExporlorer.GetCurtentBlockNumber(network, cfg.Server.TatumApiToken)
+		currentBlockNumber, err := tatumNetworkExporlorer.GetCurrentBlockNumber(network, cfg.Server.TatumApiToken)
 		if err != nil {
 			return
 		}
-		blockState = currentBlockNumber
+		blockState <- currentBlockNumber
 		logHandler.Log(logHandler.INFO, fmt.Sprintf("latest block %d", blockState))
 
 		//
@@ -32,8 +31,8 @@ func SyncNetwork(cfg config.Config, blockRepo *repository.BlockRepository, trans
 		for index := currentBlockNumber; index > currentBlockNumber-cfg.Server.NumberOfBlockForCapturing; index-- {
 			time.Sleep(5 * time.Second)
 			// logHandler.Log(logHandler.INFO, fmt.Sprintf("block state %d", blockState))
-			blockState = index
-			block, trxList := tatumNetworkExporlorer.GetBlockData(network, blockState, cfg.Server.TatumApiToken)
+			blockState <- index
+			block, trxList := tatumNetworkExporlorer.GetBlockData(network, index, cfg.Server.TatumApiToken)
 			// logHandler.Log(logHandler.INFO, fmt.Sprintf("block %v", block))
 			// logHandler.Log(logHandler.INFO, fmt.Sprintf("trx list %v", trxList))
 			blockInstance := domain.Block{

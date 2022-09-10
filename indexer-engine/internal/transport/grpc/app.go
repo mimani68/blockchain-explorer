@@ -16,13 +16,13 @@ func RunServer() {
 
 	cfg := config.NewConfig()
 
-	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", cfg.Server.ServerHost, cfg.Server.ServerPort))
+	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", cfg.Server.Host, cfg.Server.Port))
 
 	if err != nil {
 		logHandler.Log(logHandler.INFO, logHandler.ERROR, err.Error())
 		os.Exit(1)
 	} else {
-		logHandler.Log(logHandler.INFO, fmt.Sprintf("Application started on \"%s:%s\"", cfg.Server.ServerHost, cfg.Server.ServerPort))
+		logHandler.Log(logHandler.INFO, fmt.Sprintf("Application starting"))
 		logHandler.Log(logHandler.INFO, "Envirnoment: "+cfg.Server.Env)
 	}
 
@@ -40,6 +40,6 @@ func RunServer() {
 	//
 	// Serve data using gRPC format to other internal systems
 	//
-	grpcServerBuilder(listener, *cfg, blockRepo, transactionRepo)
+	GrpcServerBuilder(listener, *cfg, nil, blockRepo, transactionRepo)
 
 }

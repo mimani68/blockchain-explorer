@@ -15,7 +15,7 @@ type blockPayloadWrapper struct {
 	Transactions []dto.TatumTransaction `json:"transactions"`
 }
 
-func GetCurtentBlockNumber(network, vendorToken string) (currentNumber int, err error) {
+func GetCurrentBlockNumber(network, vendorToken string) (currentNumber int, err error) {
 	// curl https://api-eu1.tatum.io/v3/ethereum/block/current
 	url := fmt.Sprintf("https://api-eu1.tatum.io/v3/%s/block/current", network)
 	header := map[string]string{
