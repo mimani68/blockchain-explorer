@@ -5,18 +5,22 @@ services:
     indexing-engine:
         build: ./indexer-engine
         restart: always
-        ports:
-            - "3001:3000"
         # volumes:
         #     - ./indexer-engine:/app
         #     - /home/dev/go:/go:ro
-        # command: ["indexer_engine", "--grpc", "--port", "3000", "--host", "0.0.0.0", "--env", "development"]
+        # command: ["indexer_engine", "grpc", "--port", "3000", "--host", "0.0.0.0", "--env", "development"]
 
     indexing-srv:
         build: ./indexer-srv
         restart: always
-        # ports:
-        #     - "3002:3000"
+        environment:
+            - PORT=3000
+            - HOST=0.0.0.0
+            - INDEXER_ENGINE=indexing-engine:3000
+        depends_on:
+            - indexing-engine
+        ports:
+            - "3000:3000"
         # volumes:
         #     - ./indexer-srv:/app
         #     - /home/dev/go:/go:ro
@@ -46,4 +50,4 @@ services:
                 soft: 262144
                 hard: 262144
         depends_on:
-            - "clickhouse-zookeeper"
+            - clickhouse-zookeeper

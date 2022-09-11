@@ -42,8 +42,9 @@ RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
 WORKDIR /app
 
-COPY --from=build /app/build/app /app/
+COPY --from=build /app/build/index_engine /app/
+COPY --from=build /app/config/config.yaml /app/config/
 
 EXPOSE 3000
 
-CMD ["./index_engine", "--grpc", "--port", "3000", "--host", "0.0.0.0", "--env", "production"]
+CMD ["./index_engine", "grpc", "--port=3000", "--host=0.0.0.0", "--env=production"]

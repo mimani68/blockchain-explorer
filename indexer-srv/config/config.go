@@ -1,9 +1,9 @@
 package config
 
 import (
+	"fmt"
 	"os"
 
-	"app.io/pkg/exception"
 	"github.com/joho/godotenv"
 )
 
@@ -20,6 +20,8 @@ func (config *configImpl) Get(key string) string {
 
 func New(filenames ...string) Config {
 	err := godotenv.Load(filenames...)
-	exception.PanicIfNeeded(err)
+	if err != nil {
+		fmt.Println("config file with .env extension didn't found")
+	}
 	return &configImpl{}
 }
