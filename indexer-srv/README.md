@@ -1,4 +1,4 @@
-# Crypto Price Index restful
+# Crypto Block Indexer restful
 
 ## Features
 

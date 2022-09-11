@@ -63,3 +63,10 @@ Examples:
 - `/tx/0x...` - return the transactions with the specified hash
 - `index/?auth_token&scan=100:200` - instructs our service to trigger indexer for a fresh scan of blocks between 100 and 200 
 
+
+# Usage
+
+```bash
+docker-compose -p mini-indexer up -d
+```
+

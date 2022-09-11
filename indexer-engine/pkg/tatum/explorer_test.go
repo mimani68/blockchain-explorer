@@ -2,7 +2,7 @@ package tatumNetworkExporlorer
 
 import "testing"
 
-func TestGetCurtentBlockNumber(t *testing.T) {
+func TestGetCurrentBlockNumber(t *testing.T) {
 	if false {
 		t.Errorf("Having issue here")
 	}

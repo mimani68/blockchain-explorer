@@ -8,7 +8,8 @@ FROM golang:$GOLANG_VERSION AS build
 
 ENV GO111MODULE=on \
     GOOS=linux \
-    GOARCH=amd64
+    GOARCH=amd64 \
+    GOPROXY=https://goproxy.io,direct
 
 WORKDIR /app
 
@@ -20,7 +21,7 @@ RUN go get ./...
 
 COPY . /app
 
-RUN go build -o ./build/app main.go
+RUN go build -o ./build/indexer_restful main.go
 
 #
 # Serve binary file
@@ -45,4 +46,4 @@ COPY --from=build /app/build/app /app/
 
 EXPOSE 3000
 
-CMD ["./app"]
+CMD ["./indexer_restful"]

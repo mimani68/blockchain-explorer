@@ -1,4 +1,4 @@
-# Crypto price indexer
+# Crypto Block Indexer
 
 ## Feature
 
@@ -11,16 +11,13 @@
 |container| docker |
 |orchestrator| docker-compose |
 |documentation| openAPI |
-|CICD| gitlab friendly |
 
 ## Development
 
 ### Runing application
+
 ```bash
-go run init/main.go \
-  grpc \
-  --app app.io \
-  --port 3000
+go run init/main.go grpc --port 3000 --host 0.0.0.0 --env development
 ```
 
 ## Use in prodution
@@ -63,4 +60,11 @@ grpcurl -plaintext -d '{"startBlock": 5000000, "endBlock": 15000000000}' localho
 
 ```bash
 grpcurl -plaintext localhost:3000 io.app.price.api.TransactionService/GetTransaction
+```
+
+## Test
+
+```bash
+go test ./internal/transport/grpc
+go test internal/pkg/networkScaning/sync_network
 ```

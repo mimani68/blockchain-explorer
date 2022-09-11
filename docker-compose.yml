@@ -2,25 +2,25 @@ version: '3'
 
 services:
 
-    # indexing-engine:
-    #     build: ./indexer-engine
-    #     restart: always
-    #     ports:
-    #         - "3001:3000"
-    #     volumes:
-    #         - ./indexer-engine:/app
-    #         - /home/dev/go:/go:ro
-    #     command: ["indexer-engine", "--grpc", "5000"]
+    indexing-engine:
+        build: ./indexer-engine
+        restart: always
+        ports:
+            - "3001:3000"
+        # volumes:
+        #     - ./indexer-engine:/app
+        #     - /home/dev/go:/go:ro
+        # command: ["indexer_engine", "--grpc", "--port", "3000", "--host", "0.0.0.0", "--env", "development"]
 
-    # indexing-srv:
-    #     build: ./indexer-srv
-    #     restart: always
-    #     ports:
-    #         - "3002:3000"
-    #     volumes:
-    #         - ./indexer-engine:/app
-    #         - /home/dev/go:/go:ro
-    #     command: ["indexer-engine", "--grpc", "5000"]
+    indexing-srv:
+        build: ./indexer-srv
+        restart: always
+        # ports:
+        #     - "3002:3000"
+        # volumes:
+        #     - ./indexer-srv:/app
+        #     - /home/dev/go:/go:ro
+        # command: ["./indexer_restful"]
 
     clickhouse-zookeeper:
         image: zookeeper:3.8
