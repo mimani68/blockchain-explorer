@@ -29,18 +29,20 @@ func main() {
 	transactionController := controller.NewTransactionController(&transactionService)
 
 	grpcClientBlockService := pb.NewBlockServiceClient(conn)
-	blockService := service.NewBlockService(grpcClientBlockService, ctx)
+	grpcScanBlockService := pb.NewScanServiceClient(conn)
+	blockService := service.NewBlockService(grpcClientBlockService, grpcScanBlockService, ctx)
 	blockController := controller.NewBlockController(&blockService)
 
-	// grpcClientService := pb.NewBlockServiceClient(conn)
-	// transactionService := service.NewTransactionService(grpcClientService, ctx)
-	// transactionController := controller.NewTransactionController(&transactionService)
+	grpcClientStatsService := pb.NewStatsServiceClient(conn)
+	statsService := service.NewStatsService(grpcClientStatsService, ctx)
+	statsController := controller.NewStatsController(&statsService)
 
 	app := fiber.New(config.NewFiberConfig())
 	app.Use(recover.New())
 
 	transactionController.Route(app)
 	blockController.Route(app)
+	statsController.Route(app)
 
 	errLunchingApp := app.Listen(cfg.Get("HOST") + ":" + cfg.Get("PORT"))
 	exception.PanicIfNeeded(errLunchingApp)
