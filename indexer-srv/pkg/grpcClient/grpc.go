@@ -12,6 +12,5 @@ func StartClient(address string) *grpc.ClientConn {
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
-	defer conn.Close()
 	return conn
 }

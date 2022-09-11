@@ -1,22 +1,13 @@
 package model
 
-type CreateTransactionRequest struct {
-	Id       string `json:"id"`
-	Name     string `json:"name"`
-	Price    int64  `json:"price"`
-	Quantity int32  `json:"quantity"`
+import "app.io/data/entity"
+
+type TransactionResponse struct {
+	Success     string             `json:"success"`
+	Message     string             `json:"message"`
+	Transaction entity.Transaction `json:"transaction"`
 }
 
-type CreateTransactionResponse struct {
-	Id       string `json:"id"`
-	Name     string `json:"name"`
-	Price    int64  `json:"price"`
-	Quantity int32  `json:"quantity"`
-}
-
-type GetTransactionResponse struct {
-	Id       string `json:"id"`
-	Name     string `json:"name"`
-	Price    int64  `json:"price"`
-	Quantity int32  `json:"quantity"`
+type TransactionRequest struct {
+	TransactionHash string `json:"transactionHash"`
 }

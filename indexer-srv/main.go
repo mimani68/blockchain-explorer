@@ -18,18 +18,19 @@ import (
 func main() {
 	cfg := config.New()
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	conn := grpcclient.StartClient(cfg.Get("INDEXER_ENGINE"))
+	defer conn.Close()
 
-	grpcClientService := pb.NewBlockServiceClient(conn)
-	transactionService := service.NewTransactionService(grpcClientService, ctx)
+	grpcClientTrxService := pb.NewTransactionServiceClient(conn)
+	transactionService := service.NewTransactionService(grpcClientTrxService, ctx)
 	transactionController := controller.NewTransactionController(&transactionService)
 
-	// grpcClientService := pb.NewBlockServiceClient(conn)
-	// transactionService := service.NewTransactionService(grpcClientService, ctx)
-	// transactionController := controller.NewTransactionController(&transactionService)
+	grpcClientBlockService := pb.NewBlockServiceClient(conn)
+	blockService := service.NewBlockService(grpcClientBlockService, ctx)
+	blockController := controller.NewBlockController(&blockService)
 
 	// grpcClientService := pb.NewBlockServiceClient(conn)
 	// transactionService := service.NewTransactionService(grpcClientService, ctx)
@@ -39,7 +40,8 @@ func main() {
 	app.Use(recover.New())
 
 	transactionController.Route(app)
+	blockController.Route(app)
 
-	err := app.Listen(cfg.Get("HOST") + ":" + cfg.Get("PORT"))
-	exception.PanicIfNeeded(err)
+	errLunchingApp := app.Listen(cfg.Get("HOST") + ":" + cfg.Get("PORT"))
+	exception.PanicIfNeeded(errLunchingApp)
 }
