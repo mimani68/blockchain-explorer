@@ -76,4 +76,4 @@ docker-compose -p mini-indexer up -d
 
 ## Todo
 
-[] Fix problem in `energy_indexing-srv` once disconnected from `index-engine`
+[X] Fix problem in `energy_indexing-srv` once disconnected from `index-engine`

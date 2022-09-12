@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"time"
 
 	"app.io/config"
 	"app.io/controller"
@@ -18,8 +17,7 @@ import (
 func main() {
 	cfg := config.New()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-	defer cancel()
+	ctx := context.Background()
 
 	conn := grpcclient.StartClient(cfg.Get("INDEXER_ENGINE"))
 	defer conn.Close()
