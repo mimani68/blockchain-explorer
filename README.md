@@ -1,44 +1,39 @@
-# Backend Challenge
+# Mini blockchain explorer
 
-Your task is to create a backend for **mini blockchain explorer**. An example of a fully functional explorer can be found on https://explorer.energi.network/ for orientation.
+Block explorer and the most powerful API for the most popular blockchains that allows you to find, sort, and filter blockchain blocks, transactions, ... In this blueprint we try to demonstrate the some basic functionality of blockexplorer.
 
-## Requirements
-1. Use Golang
-2. Create 2 (two) microservices
-3. Raise an MR (merge request) so we can communicate
-4. Any omitted details are omitted on purpose, use your best judgment to fill in the gaps 
+![](mini-blockexploror-screen.png)
+
+## Specs
+
+* Golang > 1.18
+* Two microservices
+* Using docker-swarm as orchestrator
+* gRPC internal connection
 
 
-## Structure
+# Architecture
+
+![](./arch.jpg)
+
+
+
+
+## Services
 
 The two microservices should be:
 1. Indexer (blockchain scanner)
 2. Public facing REST API
 
-### Indexer
+## A) Indexer
+
 This backend service should scan for transactions and capture block information: 
 - number of transactions
 - transaction details (hash, from, to, amount)
-Captured data should be inserted into the database.
+Captured data can
+ be inserted into the database.
 
-```sql
-CREATE TABLE blocks(
-    number INT PRIMARY KEY,
-    hash CHAR(32) NOT NULL,
-    tx_count INT NOT NULL
-);
-
-CREATE TABLE transactions(
-    block_number INT PRIMARY KEY,
-    hash CHAR(32) NOT NULL,
-    from CHAR(32) NOT NULL,
-    to CHAR(32) NOT NULL,
-    amount NUMERIC NOT NULL,
-    nonce INT NOT NULL
-);
-```
-
-The indexer should be able to scan the range if given from-to parameters, or simply subscribe
+The indexer can be able to scan the range if given from-to parameters, or simply subscribe
 to the latest blocks.
 
 Examples:
@@ -46,7 +41,16 @@ Examples:
 - `Indexer 100` should scan all blocks starting from 100 to the latest, once reached the top it should subscribe to new incoming blocks
 - `Indexer` should scan for all blocks if they don't already exist in the database
 
-### Public API
+## B) Restful api delivery
+
+
+# Usage
+
+```bash
+docker-compose -p mini-indexer up -d
+```
+
+## Public API
 
 REST API with the following endpoints:
 - /block `[GET]`
@@ -63,17 +67,7 @@ Examples:
 - `/tx/0x...` - return the transactions with the specified hash
 - `index/?auth_token&scan=100:200` - instructs our service to trigger indexer for a fresh scan of blocks between 100 and 200 
 
-# Architecture
 
-![](./arch.jpg)
-
-
-# Usage
-
-```bash
-docker-compose -p mini-indexer up -d
-```
-
-## Todo
+## To Do
 
 [X] Fix problem in `energy_indexing-srv` once disconnected from `index-engine`
